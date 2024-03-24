@@ -1,0 +1,49 @@
+.login-container {
+    max-width: 400px;
+    margin: auto;
+    padding: 2rem;
+    border: 1px solid #000;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .login-form h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .login-form input {
+    width: 100%;
+    padding: 0.5rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  .login-form button {
+    width: 100%;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background-color: #000;
+    color: white;
+    cursor: pointer;
+  }
+  
+  .account-creation {
+    margin-top: 1rem;
+    text-align: center;
+  }
+  
+  .account-creation button {
+    background: none;
+    border: none;
+    color: #0000EE;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  
+  .account-creation span {
+    margin-right: 0.5rem;
+  }
+  
