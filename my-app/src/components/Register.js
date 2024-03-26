@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import './Login.css';
-import Register from './Register';
 
-function Login() {
+
+function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [registerPopUp, setRegisterPopUp] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -17,19 +16,30 @@ function Login() {
   };
 
   const handleSubmit = (event) => {
-    // Add logic to handle login here
     event.preventDefault();
+    // Add logic to handle login here
+    console.log('Register account', email, password);
 
-    console.log('Logging in with', email, password);
+    // const goodEmail = /^\w+@(?:\w{2,}.)+[a-z]{2,}$/.test(email);
+    // const tooShort = password.length < 8;
+    // const hasUpperCase = /[A-Z]/.test(password);
+    // const hasLowerCase = /[a-z]/.test(password);
+    // const hasNumbers = /\d/.test(password);
+    // const hasNonalphas = /\W/.test(password);
+    // if (!goodEmail || tooShort || !hasUpperCase || !hasLowerCase || !hasNumbers || !hasNonalphas) {
+    //   alert("Weak password OR bad email");
+    // }
+    //const hashedPassword = require('bcrypt').hashSync(password, 10);
+    const hashedPassword = password;
 
-    fetch('http://localhost:8080/login', {
+    fetch('http://localhost:8080/register', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
         "email": email,
-        "password": password,
+        "password": hashedPassword,
       }),
     }).then((response) => {
       console.log(response.json());
@@ -42,12 +52,12 @@ function Login() {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2>Login to SkillExchange</h2>
+        <h2>Register to SkillExchange</h2>
         <div>
           <input
             type="text"
             name="email"
-            placeholder="email"
+            placeholder="Email"
             value={email}
             onChange={handleInputChange}
           />
@@ -62,16 +72,11 @@ function Login() {
           />
         </div>
         <div>
-          <button type="submit">Sign in</button>
-        </div>
-        <div className="account-creation">
-          <span>Don't have an account?</span>
-          <button type="button" onClick={() => { setRegisterPopUp(!registerPopUp) }}>Create an account!</button>
+          <button type="submit">Register</button>
         </div>
       </form>
-      {registerPopUp && <Register />}
     </div>
   );
 }
 
-export default Login;
+export default Register;
