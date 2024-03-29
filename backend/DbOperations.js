@@ -7,12 +7,12 @@
  */
 
 // import the mongodb driver
-const { MongoClient } = require('mongodb');
+const { MongoClient } = require("mongodb");
 
 // import ObjectID
-const { ObjectId } = require('mongodb');
+const { ObjectId } = require("mongodb");
 
-require('dotenv').config();
+require("dotenv").config();
 
 const dbUser = process.env.DB_USER;
 const dbPassword = process.env.DB_PASSWORD;
@@ -30,10 +30,10 @@ let MongoConnection;
 const connect = async () => {
   // always use try/catch to handle any exception
   try {
-    MongoConnection = (await MongoClient.connect(
-      dbURL,
-      { useNewUrlParser: true, useUnifiedTopology: true },
-    )); // we return the entire connection, not just the DB
+    MongoConnection = await MongoClient.connect(dbURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }); // we return the entire connection, not just the DB
     // check that we are connected to the db
     console.log(`connected to db: ${MongoConnection.db().databaseName}`);
     return MongoConnection;
@@ -71,7 +71,7 @@ const getUsers = async () => {
   try {
     // get the db
     const db = await getDB();
-    const result = await db.collection('users').find({}).toArray();
+    const result = await db.collection("users").find({}).toArray();
     // print the results
     console.log(`users: ${JSON.stringify(result)}`);
     return result;
@@ -89,8 +89,8 @@ const getUsers = async () => {
 const addUser = async (newUser) => {
   // get the db
   const db = await getDB();
-  console.log('inserting new user');
-  const result = await db.collection('users').insertOne(newUser);
+  console.log("inserting new user");
+  const result = await db.collection("users").insertOne(newUser);
   return result.insertedId;
 
   /**  This is a callback version of a mongodb query
@@ -120,7 +120,9 @@ const getUser = async (userID) => {
   try {
     // get the db
     const db = await getDB();
-    const result = await db.collection('users').findOne({ _id: new ObjectId(userID) });
+    const result = await db
+      .collection("users")
+      .findOne({ _id: new ObjectId(userID) });
     // print the result
     console.log(`user: ${JSON.stringify(result)}`);
     return result;
@@ -138,7 +140,7 @@ const getUserByEmail = async (email) => {
   try {
     // get the db
     const db = await getDB();
-    const result = await db.collection('users').findOne({ 'email': email });
+    const result = await db.collection("users").findOne({ email: email });
     // print the result
     console.log(`user: ${JSON.stringify(result)}`);
     return result;
@@ -148,21 +150,57 @@ const getUserByEmail = async (email) => {
 };
 
 // getAuser('641cbbba7307d82e8c2fff67');
+
+const field = (name, type) => {
+  return {
+    name: name,
+    type: type,
+  };
+};
+
+const userFields = [
+  field("email", "string"),
+  field("password", "string"),
+  field("displayName", "string"),
+  field("phone", "string"),
+  field("showPhone", "string"),
+  field("bio", "string")
+];
+
+const validKeyValue = (key, value) => {
+  const reducer = (acc, x) =>
+    acc || (x.name === key && x.type === typeof value);
+  return userFields.reduce(reducer, false);
+};
+
+const pair = (key, value) => {
+  return {
+    key: key,
+    value: value,
+  };
+};
+
 /**
  * UPDATE a user (PUT /user/:id)
  * https://app.swaggerhub.com/apis/ericfouh/usersRoster_App/1.0.0#/users/updateuser
  * @param {userID}  the id of the user
- * @param {newMajor} the new major of the user
+ * @param {newInfo} array of key, value pairs to be updated on the user
  * @returns
  */
-const updateUser = async (userID, newMajor) => {
+const updateUser = async (userID, newInfo) => {
+  const validFields = newInfo.reduce(
+    (acc, x) => acc && validKeyValue(x.key, x.value),
+    true
+  );
+  if (!validFields) return console.log("invalid information");
+  const updateObj = {};
+  newInfo.forEach(({ key, value }) => (updateObj[key] = value));
   try {
     // get the db
     const db = await getDB();
-    const result = await db.collection('users').updateOne(
-      { _id: new ObjectId(userID) },
-      { $set: { major: newMajor } },
-    );
+    const result = await db
+      .collection("users")
+      .updateOne({ _id: new ObjectId(userID) }, { $set: updateObj });
     return result;
   } catch (err) {
     return console.log(`error: ${err.message}`);
@@ -180,9 +218,9 @@ const deleteUser = async (userID) => {
   try {
     // get the db
     const db = await getDB();
-    const result = await db.collection('users').deleteOne(
-      { _id: new ObjectId(userID) },
-    );
+    const result = await db
+      .collection("users")
+      .deleteOne({ _id: new ObjectId(userID) });
     // print the result
     console.log(`user: ${JSON.stringify(result)}`);
     return result;

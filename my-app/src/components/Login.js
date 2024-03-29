@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import "./Login.css";
 import Register from "./Register";
+import logo from './logo.png';
+import { useHistory } from "react-router-dom";
 
 function Login() {
+  //const history = useHistory();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registerPopUp, setRegisterPopUp] = useState(false);
@@ -33,7 +36,9 @@ function Login() {
       }),
     })
       .then((response) => {
-        console.log(response.json());
+        console.log(response);
+        sessionStorage.setItem('appToken', response.token);
+        //history.push(`/profile/${email}`);
       })
       .catch((error) => {
         console.error(error);
@@ -43,6 +48,7 @@ function Login() {
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit} className="login-form">
+      <img src={logo} alt="Logo" className="logo" />
         <h2>Login to SkillExchange</h2>
         <div>
           <input

@@ -54,7 +54,9 @@ webapp.post("/login", async (req, res) => {
   try {
     const match = await bcrypt.compare(req.body.password, user.password);
     if (!match) {
-      res.status(401).json({ error: "authentication failed" });
+      res
+        .status(401)
+        .json({ error: "authentication failed (incorrect password)" });
       return;
     }
   } catch (err) {
@@ -110,7 +112,7 @@ webapp.post("/register", async (req, resp) => {
 /**
  * route implementation GET /students
  */
-webapp.get("/students", async (req, resp) => {
+webapp.get("/users", async (req, resp) => {
   try {
     // get the data from the DB
     const students = await dbLib.getStudents();
@@ -125,11 +127,11 @@ webapp.get("/students", async (req, resp) => {
 /**
  * route implementation GET /student/:id
  */
-webapp.get("/student/:id", async (req, res) => {
-  console.log("READ a student");
+webapp.get("/users/:id", async (req, res) => {
+  console.log(`find user with id: ${req.params.id}`);
   try {
     // get the data from the db
-    const results = await dbLib.getStudent(req.params.id);
+    const results = await dbLib.getUserByEmail(req.params.id);
     if (results === undefined) {
       res.status(404).json({ error: "unknown student" });
       return;
@@ -137,7 +139,7 @@ webapp.get("/student/:id", async (req, res) => {
     // send the response with the appropriate status code
     res.status(200).json({ data: results });
   } catch (err) {
-    res.status(404).json({ message: "there was error" });
+    res.status(404).json({ message: `problem: ${err}` });
   }
 });
 

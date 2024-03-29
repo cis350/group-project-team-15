@@ -3,26 +3,29 @@
  */
 
 // import JWT
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
 
 // import the env variables
-require('dotenv').config();
+require("dotenv").config();
 
 // import DB function
-const { getStudentByName } = require('../DbOperations');
+const { getStudentByName } = require("../DbOperations");
 
 /**
  * Create a JWT containing the username
  * @param {*} userid
  * @returns the token
  */
+
+const secret = process.env.KEY;
+
 const authenticateUser = (userid) => {
   try {
-    const token = jwt.sign({ username: userid }, process.env.KEY, { expiresIn: '120s' });
-    console.log('token', token);
+    const token = jwt.sign({ username: userid }, secret, { expiresIn: "120s" });
+    console.log("token", token);
     return token;
   } catch (err) {
-    return console.log('error', err.message);
+    return console.log("error", err.message);
   }
 };
 
@@ -34,8 +37,8 @@ const authenticateUser = (userid) => {
 const verifyUser = async (token) => {
   try {
     // decoded contains the paylod of the token
-    const decoded = jwt.verify(token, process.env.KEY);
-    console.log('payload', decoded);
+    const decoded = jwt.verify(token, secret);
+    console.log("payload", decoded);
     // check that the payload contains a valid user
     const user = await getStudentByName(decoded.username);
     if (!user) {
@@ -45,7 +48,7 @@ const verifyUser = async (token) => {
     return true;
   } catch (err) {
     // invalid token
-    console.log('error', err.message);
+    console.log("error", err.message);
     return false;
   }
 };
