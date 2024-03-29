@@ -3,6 +3,7 @@ import "./Login.css";
 import Register from "./Register";
 import logo from './logo.png';
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Login() {
   const navigate = useNavigate();
@@ -25,24 +26,17 @@ function Login() {
 
     console.log("Logging in with", email, password);
 
-    fetch("http://localhost:8080/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email: email,
-        password: password,
-      }),
+    axios.post("http://localhost:8080/login", {
+      email: email,
+      password: password
+    }).then((response) => {
+      console.log(response);
+      sessionStorage.setItem('appToken', response.token);
+      navigate(`/profile/${email}`);
     })
-      .then((response) => {
-        console.log(response);
-        sessionStorage.setItem('appToken', response.token);
-        navigate(`/profile/${email}`);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    .catch((error) => {
+      console.error(error);
+    });
   };
 
   return (

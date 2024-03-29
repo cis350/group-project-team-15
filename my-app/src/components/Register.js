@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import './Login.css';
-
+import { useNavigate } from "react-router-dom";
+import axios from 'axios';
 
 function Register() {
+  const navigate = useNavigate();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -32,17 +34,13 @@ function Register() {
     //const hashedPassword = require('bcrypt').hashSync(password, 10);
     const hashedPassword = password;
 
-    fetch('http://localhost:8080/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        "email": email,
-        "password": hashedPassword,
-      }),
+    axios.post('http://localhost:8080/register', {
+      email: email,
+      password: hashedPassword
     }).then((response) => {
-      console.log(response.json());
+      console.log(response);
+      sessionStorage.setItem('appToken', response.token);
+      navigate(`/profile/${email}`);
     }).catch(error => {
       console.error(error);
     });
@@ -50,10 +48,9 @@ function Register() {
 
 
   return (
-    <div className="login-container">
+    <div className="">
       <form onSubmit={handleSubmit} className="login-form">
-        <h2>Register to SkillExchange</h2>
-        <div>
+        <div className="mt-3">
           <input
             type="text"
             name="email"
