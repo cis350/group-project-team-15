@@ -162,7 +162,7 @@ webapp.delete("/student/:id", async (req, res) => {
 /**
  * route implementation PUT /student/:id
  */
-webapp.put("/student/:id", async (req, res) => {
+webapp.put("/users/:id", async (req, res) => {
   console.log("UPDATE a student");
   // parse the body of the request
   if (!req.body.info) {
@@ -170,7 +170,7 @@ webapp.put("/student/:id", async (req, res) => {
     return;
   }
   try {
-    const result = await dbLib.updateUser(req.params.id, req.body.info);
+    const result = await dbLib.updateUserByEmail(req.params.id, req.body.info);
     // send the response with the appropriate status code
     res.status(200).json({ message: result });
   } catch (err) {

@@ -165,13 +165,40 @@ const updateUser = async (userID, newInfo) => {
     console.log(kv);
     updateObj[kv.key] = kv.value;
   });
-  console.log(updateObj);
+  console.log(`new obj: ${updateObj}`);
   try {
     // get the db
     const db = await getDB();
     const result = await db
       .collection("users")
       .updateOne({ _id: new ObjectId(userID) }, { $set: updateObj });
+    return result;
+  } catch (err) {
+    return console.log(`error: ${err.message}`);
+  }
+};
+
+/**
+ * UPDATE a user (PUT /user/:id)
+ * https://app.swaggerhub.com/apis/ericfouh/usersRoster_App/1.0.0#/users/updateuser
+ * @param {email}  the email of the user
+ * @param {newInfo} array of key, value pairs to be updated on the user
+ * @returns
+ */
+const updateUserByEmail = async (email, newInfo) => {
+  console.log(newInfo);
+  const updateObj = {};
+  newInfo.forEach((kv) => {
+    console.log(kv);
+    updateObj[kv.key] = kv.value;
+  });
+  console.log(`new obj: ${updateObj}`);
+  try {
+    // get the db
+    const db = await getDB();
+    const result = await db
+      .collection("users")
+      .updateOne({ email: email }, { $set: updateObj });
     return result;
   } catch (err) {
     return console.log(`error: ${err.message}`);
@@ -210,5 +237,6 @@ module.exports = {
   getUsers,
   getUser,
   updateUser,
+  updateUserByEmail,
   deleteUser,
 };
