@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import "./Login.css";
 import Register from "./Register";
 import logo from './logo.png';
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
-  //const history = useHistory();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registerPopUp, setRegisterPopUp] = useState(false);
@@ -38,7 +38,7 @@ function Login() {
       .then((response) => {
         console.log(response);
         sessionStorage.setItem('appToken', response.token);
-        //history.push(`/profile/${email}`);
+        navigate(`/profile/${email}`);
       })
       .catch((error) => {
         console.error(error);
