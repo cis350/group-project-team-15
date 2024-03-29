@@ -1,17 +1,17 @@
-import React, { useState } from 'react';
-import './Login.css';
-import Register from './Register';
+import React, { useState } from "react";
+import "./Login.css";
+import Register from "./Register";
 
 function Login() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [registerPopUp, setRegisterPopUp] = useState(false);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    if (name === 'email') {
+    if (name === "email") {
       setEmail(value);
-    } else if (name === 'password') {
+    } else if (name === "password") {
       setPassword(value);
     }
   };
@@ -20,24 +20,25 @@ function Login() {
     // Add logic to handle login here
     event.preventDefault();
 
-    console.log('Logging in with', email, password);
+    console.log("Logging in with", email, password);
 
-    fetch('http://localhost:8080/login', {
-      method: 'POST',
+    fetch("http://localhost:8080/login", {
+      method: "POST",
       headers: {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        "email": email,
-        "password": password,
+        email: email,
+        password: password,
       }),
-    }).then((response) => {
-      console.log(response.json());
-    }).catch(error => {
-      console.error(error);
-    });
+    })
+      .then((response) => {
+        console.log(response.json());
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   };
-
 
   return (
     <div className="login-container">
@@ -66,7 +67,14 @@ function Login() {
         </div>
         <div className="account-creation">
           <span>Don't have an account?</span>
-          <button type="button" onClick={() => { setRegisterPopUp(!registerPopUp) }}>Create an account!</button>
+          <button
+            type="button"
+            onClick={() => {
+              setRegisterPopUp(!registerPopUp);
+            }}
+          >
+            Create an account!
+          </button>
         </div>
       </form>
       {registerPopUp && <Register />}
