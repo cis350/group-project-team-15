@@ -35,12 +35,32 @@ webapp.get('/', (req, resp) => {
  * Login endpoint
  * The name is used to log in
  */
-webapp.post('/login', (req, res) => {
+webapp.post('/login', async (req, res) => {
   // check that the name was sent in the body
   if (!req.body.email || !req.body.password) {
     res.status(401).json({ error: `empty or missing name: ${req.body}` });
     return;
   }
+
+  // validate password
+  const user = await dbLib.getUserByEmail(req.body.email);
+  console.log(user);
+
+  if (!user) {
+    res.status(401).json({ error: `failure ${user}` });
+    return;
+  }
+
+  try {
+    const match = await bcrypt.compare(req.body.password, user.password);
+    if (!match) {
+      res.status(401).json({ error: 'authentication failed' });
+      return;
+    }
+  } catch (err) {
+    res.status(401).json({ error: `${err}` });
+  }
+
   // authenticate the user
   try {
     const token = authenticateUser(req.body.email);
@@ -56,14 +76,14 @@ webapp.post('/login', (req, res) => {
  */
 webapp.post('/register', async (req, resp) => {
   // parse the body
+  console.log(req.body);
   if (!req.body.email || !req.body.password) {
-    resp.status(400).json({ message: 'missing name, email or major in the body' });
-    return;
+    return resp.status(400).json({ message: `${req.body}` });
   }
 
   // test if the email exists, if true then return 400
   // TODO: change func to be getUserByEmail
-  if (dbLib.getStudentByName(req.body.email)) {
+  if (dbLib.getUserByEmail(req.body.email)) {
     resp.status(400).json({ message: 'email already exists' });
     return;
   }

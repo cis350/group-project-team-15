@@ -131,14 +131,14 @@ const getUser = async (userID) => {
 
 /**
  * READ a user by name
- * @param {userID}  the id of the user
+ * @param {email}  the email of the user
  * @returns the user data
  */
-const getUserByName = async (username) => {
+const getUserByEmail = async (email) => {
   try {
     // get the db
     const db = await getDB();
-    const result = await db.collection('users').findOne({ name: username });
+    const result = await db.collection('users').findOne({ 'email': email });
     // print the result
     console.log(`user: ${JSON.stringify(result)}`);
     return result;
@@ -197,7 +197,7 @@ module.exports = {
   getDB,
   connect,
   addUser,
-  getUserByName,
+  getUserByEmail,
   getUsers,
   getUser,
   updateUser,
