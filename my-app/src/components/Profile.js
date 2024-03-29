@@ -25,6 +25,17 @@ function Profile() {
     return <div>No user found!</div>;
   }
 
+  function callUpdate() {
+    try {
+      const response = axios.put(`http://localhost:8080/users/${id}`, {
+        email: "",
+        password: "",
+      });
+    } catch (err) {
+      console.error(err);
+    }
+  }
+
   return (
     <div className="profile-container">
       <div className="header">
@@ -36,16 +47,27 @@ function Profile() {
         </div>
         <h2>{userData.email}</h2>
         <p className="skill">
-          has the password:{" "}
-          <span className="skill-badge">{userData.password}</span>
+          has skills:{" "}
+          {userData.skills &&
+            userData.skills.map((skill) => {
+              return (
+                <span key={skill} className="skill-badge">
+                  {skill}
+                </span>
+              );
+            })}
         </p>
         <div className="looking-for">
           <h3>Looking for:</h3>
           <div className="tags-container">
-            <span className="tag">Artists</span>
-            <span className="tag">Writers</span>
-            <span className="tag">Singers</span>
-            <span className="tag">Willy</span>
+            {userData["looking for"] &&
+              userData["looking for"].map((skill) => {
+                return (
+                  <span key={skill} className="skill-badge">
+                    {skill}
+                  </span>
+                );
+              })}
           </div>
         </div>
         <div className="search">

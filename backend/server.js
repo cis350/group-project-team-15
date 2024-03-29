@@ -85,11 +85,10 @@ webapp.post("/register", async (req, resp) => {
     return resp.status(400).json({ message: `${req.body}` });
   }
 
-  // test if the email exists, if true then return 400
-  // TODO: change func to be getUserByEmail
-  if (dbLib.getUserByEmail(req.body.email)) {
-    resp.status(400).json({ message: "email already exists" });
-    return;
+  const content = await dbLib.getUserByEmail(req.body.email);
+
+  if (content) {
+    return resp.status(400).json({ message: "email already exists" });
   }
 
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -166,16 +165,16 @@ webapp.delete("/student/:id", async (req, res) => {
 webapp.put("/student/:id", async (req, res) => {
   console.log("UPDATE a student");
   // parse the body of the request
-  if (!req.body.major) {
-    res.status(404).json({ message: "missing major" });
+  if (!req.body.info) {
+    res.status(404).json({ message: "missing info" });
     return;
   }
   try {
-    const result = await dbLib.updateStudent(req.params.id, req.body.major);
+    const result = await dbLib.updateUser(req.params.id, req.body.info);
     // send the response with the appropriate status code
     res.status(200).json({ message: result });
   } catch (err) {
-    res.status(404).json({ message: "there was error" });
+    res.status(404).json({ message: `error: ${err}` });
   }
 });
 

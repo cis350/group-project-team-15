@@ -151,35 +151,6 @@ const getUserByEmail = async (email) => {
 
 // getAuser('641cbbba7307d82e8c2fff67');
 
-const field = (name, type) => {
-  return {
-    name: name,
-    type: type,
-  };
-};
-
-const userFields = [
-  field("email", "string"),
-  field("password", "string"),
-  field("displayName", "string"),
-  field("phone", "string"),
-  field("showPhone", "string"),
-  field("bio", "string")
-];
-
-const validKeyValue = (key, value) => {
-  const reducer = (acc, x) =>
-    acc || (x.name === key && x.type === typeof value);
-  return userFields.reduce(reducer, false);
-};
-
-const pair = (key, value) => {
-  return {
-    key: key,
-    value: value,
-  };
-};
-
 /**
  * UPDATE a user (PUT /user/:id)
  * https://app.swaggerhub.com/apis/ericfouh/usersRoster_App/1.0.0#/users/updateuser
@@ -188,13 +159,13 @@ const pair = (key, value) => {
  * @returns
  */
 const updateUser = async (userID, newInfo) => {
-  const validFields = newInfo.reduce(
-    (acc, x) => acc && validKeyValue(x.key, x.value),
-    true
-  );
-  if (!validFields) return console.log("invalid information");
+  console.log(newInfo);
   const updateObj = {};
-  newInfo.forEach(({ key, value }) => (updateObj[key] = value));
+  newInfo.forEach((kv) => {
+    console.log(kv);
+    updateObj[kv.key] = kv.value;
+  });
+  console.log(updateObj);
   try {
     // get the db
     const db = await getDB();
