@@ -165,14 +165,17 @@ webapp.delete("/student/:id", async (req, res) => {
  * route implementation PUT /student/:id
  */
 webapp.put("/users/:id", async (req, res) => {
-  console.log("UPDATE a student");
+  console.log(`UPDATE a student with`);
+  console.log(req.body);
   // parse the body of the request
   if (!req.body.info) {
     res.status(404).json({ message: "missing info" });
     return;
   }
   try {
-    const result = await dbLib.updateUserByEmail(req.params.id, req.body.info);
+    const user = await dbLib.getUser(req.params.id);
+    const email = user.email;
+    const result = await dbLib.updateUserByEmail(email, req.body.info);
     // send the response with the appropriate status code
     res.status(200).json({ message: result });
   } catch (err) {

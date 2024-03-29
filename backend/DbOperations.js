@@ -192,7 +192,9 @@ const updateUserByEmail = async (email, newInfo) => {
     console.log(kv);
     updateObj[kv.key] = kv.value;
   });
-  console.log(`new obj: ${updateObj}`);
+  console.log(email);
+  console.log(`new obj: `);
+  console.log(updateObj);
   try {
     // get the db
     const db = await getDB();
