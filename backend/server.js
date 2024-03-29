@@ -98,6 +98,8 @@ webapp.post("/register", async (req, resp) => {
     const newUser = {
       email: req.body.email,
       password: hashedPassword,
+      skills: [],
+      "looking for": []
     };
     console.log(newUser);
     const result = await dbLib.addUser(newUser);

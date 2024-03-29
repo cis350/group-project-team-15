@@ -88,7 +88,7 @@ function Profile() {
               </button>
               {displayUpdate && 
                 <ConfigureSkills 
-                  skills={userData.skills}
+                  skills={userData.skills ? userData.skills : []}
                   updateSkills={updateSkills}
                 />}
           </div>}
@@ -115,7 +115,7 @@ function Profile() {
               </button>
               {displayLookingFor && 
                 <ConfigureSkills 
-                  skills={userData["looking for"]}
+                  skills={userData["looking for"] ? userData["looking for"] : []}
                   updateSkills={updateLookingFor}
                 />}
           </div>}
