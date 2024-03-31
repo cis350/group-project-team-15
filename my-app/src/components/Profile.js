@@ -31,12 +31,14 @@ function Profile() {
 
   async function updateProfile(key, value) {
     try {
-      const response = await axios.put(`http://localhost:8080/users/${id}`, { 
+      const response = await axios.put(`http://localhost:8080/users/${id}`, {
         id: id,
-        info: [{
-          "key": key,
-          "value": value
-        }]
+        info: [
+          {
+            key: key,
+            value: value,
+          },
+        ],
       });
       console.log(response);
     } catch (err) {
@@ -64,71 +66,87 @@ function Profile() {
         <h1>Welcome to SkillExchange!</h1>
       </div>
       <div className="profile">
-        <div className = "left-screen">
-        <div className="profile-picture">
-          {/* Placeholder for profile picture */}
-        </div>
-        <h2>{userData.email}</h2>
-        <p className="skill">
-          has skills:{" "}
-          <div className="individual-skill">
-          {userData.skills &&
-              userData.skills.map((skill) => {
-                return (
-                  <span key={skill} className="skill-badge mx-[1.5px]">
-                    {skill}
-                  </span>
-                );
-              })}
-            </div>
-          {<div className="py-2">
-              <button 
-                onClick={() => {setDisplayUpdate(!displayUpdate)}}
-                className="bg-blue-100 p-3 text-sm font-semibold rounded-2xl
-                           hover:bg-blue-200 duration-100"
-              >
-                Update Skills
-              </button>
-              {displayUpdate && 
-                <ConfigureSkills 
-                  skills={userData.skills ? userData.skills : []}
-                  updateSkills={updateSkills}
-                />}
-          </div>}
-        </p>
-        <div className="looking-for">
-          <div>
-            Looking for: {" "}
-            <div className = "looking-for-skill">
-            {userData["looking for"] &&
-              userData["looking for"].map((skill) => {
-                return (
-                  <span key={skill} className="skill-badge mx-[1.5px]">
-                    {skill}
-                  </span>
-                );
-              })}
-            </div>
+        <div className="left-screen">
+          <div className="profile-picture">
+            {/* Placeholder for profile picture */}
           </div>
-          {<div className="py-2">
-              <button 
-                onClick={() => {setDisplayLookingFor(!displayLookingFor)}}
-                className="bg-blue-100 p-3 text-sm font-semibold rounded-2xl
+          <h2 className="name">{userData.email}</h2>
+          <p className="skill">
+            has skills:{" "}
+            <div className="individual-skill">
+              {userData.skills &&
+                userData.skills.map((skill) => {
+                  return (
+                    <span key={skill} className="skill-badge mx-[1.5px]">
+                      {skill}
+                    </span>
+                  );
+                })}
+            </div>
+            {
+              <div className="py-2">
+                <button
+                  onClick={() => {
+                    setDisplayUpdate(!displayUpdate);
+                  }}
+                  className="bg-blue-100 p-3 text-sm font-semibold rounded-2xl
                            hover:bg-blue-200 duration-100"
-              >
-                Update Skills
-              </button>
-              {displayLookingFor && 
-                <ConfigureSkills 
-                  skills={userData["looking for"] ? userData["looking for"] : []}
-                  updateSkills={updateLookingFor}
-                />}
-          </div>}
-        </div>
+                >
+                  Update Skills
+                </button>
+                {displayUpdate && (
+                  <ConfigureSkills
+                    skills={userData.skills ? userData.skills : []}
+                    updateSkills={updateSkills}
+                  />
+                )}
+              </div>
+            }
+          </p>
+          <div className="looking-for">
+            <div>
+              Looking for:{" "}
+              <div className="looking-for-skill">
+                {userData["looking for"] &&
+                  userData["looking for"].map((skill) => {
+                    return (
+                      <span key={skill} className="skill-badge mx-[1.5px]">
+                        {skill}
+                      </span>
+                    );
+                  })}
+              </div>
+            </div>
+            {
+              <div className="py-2">
+                <button
+                  onClick={() => {
+                    setDisplayLookingFor(!displayLookingFor);
+                  }}
+                  className="bg-blue-100 p-3 text-sm font-semibold rounded-2xl
+                           hover:bg-blue-200 duration-100"
+                >
+                  Update Skills
+                </button>
+                {displayLookingFor && (
+                  <ConfigureSkills
+                    skills={
+                      userData["looking for"] ? userData["looking for"] : []
+                    }
+                    updateSkills={updateLookingFor}
+                  />
+                )}
+              </div>
+            }
+          </div>
         </div>
         <div className="search-container">
-          <input type="text" placeholder="Find some skills to exchange!" className = "search"/>
-          <div className = "search-results">
+          <input
+            type="text"
+            placeholder="Find some skills to exchange!"
+            className="search"
+          />
+          <div className="search-results">
             {/* Search results will be displayed here */}
           </div>
         </div>
