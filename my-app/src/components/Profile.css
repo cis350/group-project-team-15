@@ -36,6 +36,20 @@
     color: white;
     padding: 5px 10px;
     border-radius: 20px;
+    display: block;
+    margin: 10px 0;
+    width: fit-content;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+  .individual-skill {
+    padding-left: 20px;
+  }
+
+  .looking-for-skill {
+    padding-left: 20px;
   }
   
   .tags-container {

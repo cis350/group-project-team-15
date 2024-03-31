@@ -70,6 +70,7 @@ function Profile() {
         <h2>{userData.email}</h2>
         <p className="skill">
           has skills:{" "}
+          <div className="individual-skill">
           {userData.skills &&
               userData.skills.map((skill) => {
                 return (
@@ -78,6 +79,7 @@ function Profile() {
                   </span>
                 );
               })}
+            </div>
           {<div className="py-2">
               <button 
                 onClick={() => {setDisplayUpdate(!displayUpdate)}}
@@ -96,6 +98,7 @@ function Profile() {
         <div className="looking-for">
           <div>
             Looking for: {" "}
+            <div className = "looking-for-skill">
             {userData["looking for"] &&
               userData["looking for"].map((skill) => {
                 return (
@@ -104,6 +107,7 @@ function Profile() {
                   </span>
                 );
               })}
+            </div>
           </div>
           {<div className="py-2">
               <button 
