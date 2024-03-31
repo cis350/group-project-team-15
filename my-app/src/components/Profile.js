@@ -64,6 +64,7 @@ function Profile() {
         <h1>Welcome to SkillExchange!</h1>
       </div>
       <div className="profile">
+        <div className = "left-screen">
         <div className="profile-picture">
           {/* Placeholder for profile picture */}
         </div>
@@ -124,8 +125,12 @@ function Profile() {
                 />}
           </div>}
         </div>
-        <div className="search">
-          <input type="text" placeholder="Find some skills to exchange!" />
+        </div>
+        <div className="search-container">
+          <input type="text" placeholder="Find some skills to exchange!" className = "search"/>
+          <div className = "search-results">
+            {/* Search results will be displayed here */}
+          </div>
         </div>
       </div>
     </div>
