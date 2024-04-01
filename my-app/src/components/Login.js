@@ -11,6 +11,9 @@ function Login() {
   const [password, setPassword] = useState("");
   const [registerPopUp, setRegisterPopUp] = useState(false);
 
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (name === "email") {
@@ -36,6 +39,8 @@ function Login() {
     })
     .catch((error) => {
       console.error(error);
+      setError(true);
+      setErrorMessage(`Error: ${error.response.data.error}`);
     });
   };
 
@@ -65,6 +70,7 @@ function Login() {
         <div>
           <button type="submit">Sign in</button>
         </div>
+        {error && <div className="text-red-500">{errorMessage}</div>}
         <div className="account-creation">
           <span>Don't have an account?</span>
           <button

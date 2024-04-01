@@ -10,6 +10,8 @@ function Profile() {
   const [userData, setUserData] = useState(null);
   const [displayUpdate, setDisplayUpdate] = useState(false);
   const [displayLookingFor, setDisplayLookingFor] = useState(false);
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,14 +37,18 @@ function Profile() {
         id: id,
         info: [
           {
-            key: key,
-            value: value,
+            "key": key,
+            "value": value,
           },
         ],
       });
       console.log(response);
+      setError(false);
+      setErrorMessage("");
     } catch (err) {
       console.error(err);
+      setError(true);
+      setErrorMessage("There was an error updating the profile");
     }
   }
 
@@ -100,6 +106,7 @@ function Profile() {
                     updateSkills={updateSkills}
                   />
                 )}
+                {error && <div className="text-red-500">{errorMessage}</div>}
               </div>
             }
           </p>
