@@ -40,7 +40,7 @@ webapp.post("/login", async (req, res) => {
   if (!req.body.email || !req.body.password) {
     // trust me bro
     const v = !req.body.email && !req.body.password ? "email and password" : !req.body.email ? "email" : "password";
-    res.status(401).json({ error: `empty or missing name: ${v}` });
+    res.status(400).json({ error: `empty or missing name: ${v}` });
     return;
   }
 
@@ -48,7 +48,7 @@ webapp.post("/login", async (req, res) => {
   const user = await dbLib.getUserByEmail(req.body.email);
 
   if (!user) {
-    res.status(401).json({ error: `user does not exist: ${user}` });
+    res.status(404).json({ error: `user does not exist: ${user}` });
     return;
   }
 
@@ -84,13 +84,13 @@ webapp.post("/register", async (req, resp) => {
 
   if (!req.body.email || !req.body.password) {
     const v = !req.body.email && !req.body.password ? "email and password" : !req.body.email ? "email" : "password";
-    resp.status(401).json({ error: `empty or missing name: ${v}` });
+    resp.status(400).json({ error: `empty or missing name: ${v}` });
     return;
   }
 
   const content = await dbLib.getUserByEmail(req.body.email);
   if (content) {
-    resp.status(401).json({ error: "email already exists" });
+    resp.status(409).json({ error: "email already exists" });
     return;
   }
 
