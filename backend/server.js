@@ -38,16 +38,17 @@ webapp.get("/", (req, resp) => {
 webapp.post("/login", async (req, res) => {
   // check that the name was sent in the body
   if (!req.body.email || !req.body.password) {
-    res.status(401).json({ error: `empty or missing name: ${req.body}` });
+    // trust me bro
+    const v = !req.body.email && !req.body.password ? "email and password" : !req.body.email ? "email" : "password";
+    res.status(401).json({ error: `empty or missing name: ${v}` });
     return;
   }
 
   // validate password
   const user = await dbLib.getUserByEmail(req.body.email);
-  console.log(user);
 
   if (!user) {
-    res.status(401).json({ error: `failure ${user}` });
+    res.status(401).json({ error: `user does not exist: ${user}` });
     return;
   }
 
@@ -82,13 +83,15 @@ webapp.post("/register", async (req, resp) => {
   console.log(req.body.email);
 
   if (!req.body.email || !req.body.password) {
-    return resp.status(400).json({ message: `${req.body}` });
+    const v = !req.body.email && !req.body.password ? "email and password" : !req.body.email ? "email" : "password";
+    resp.status(401).json({ error: `empty or missing name: ${v}` });
+    return;
   }
 
   const content = await dbLib.getUserByEmail(req.body.email);
-
   if (content) {
-    return resp.status(400).json({ message: "email already exists" });
+    resp.status(401).json({ error: "email already exists" });
+    return;
   }
 
   const hashedPassword = await bcrypt.hash(req.body.password, 10);
@@ -106,7 +109,7 @@ webapp.post("/register", async (req, resp) => {
     console.log(result);
     resp.status(201).json({ data: { id: result } });
   } catch (err) {
-    resp.status(400).json({ message: "There was an error" });
+    resp.status(400).json({ error: "There was an error" });
   }
 });
 
@@ -173,9 +176,7 @@ webapp.put("/users/:id", async (req, res) => {
     return;
   }
   try {
-    const user = await dbLib.getUser(req.params.id);
-    const email = user.email;
-    const result = await dbLib.updateUserByEmail(email, req.body.info);
+    const result = await dbLib.updateUserByEmail(req.params.id, req.body.info);
     // send the response with the appropriate status code
     res.status(200).json({ message: result });
   } catch (err) {

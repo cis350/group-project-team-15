@@ -8,6 +8,9 @@ function Register() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState('');
+
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     if (name === 'email') {
@@ -43,6 +46,8 @@ function Register() {
       navigate(`/profile/${email}`);
     }).catch(error => {
       console.error(error);
+      setError(true);
+      setErrorMessage(`Error: ${error.response.data.error}`);
     });
   };
 
@@ -71,6 +76,7 @@ function Register() {
         <div>
           <button type="submit">Register</button>
         </div>
+        {error && <div className="text-red-500">{errorMessage}</div>}
       </form>
     </div>
   );
