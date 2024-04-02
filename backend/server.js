@@ -172,7 +172,7 @@ webapp.put("/users/:id", async (req, res) => {
   console.log(req.body);
   // parse the body of the request
   if (!req.body.info) {
-    res.status(404).json({ message: "missing info" });
+    res.status(400).json({ message: "missing info" });
     return;
   }
   try {
