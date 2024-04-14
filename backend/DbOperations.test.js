@@ -1,10 +1,9 @@
 const request = require('supertest');
-const DbOperations = require('../backend/DbOperations');
+const DbConnection = require('../backend/DbConnection');
 const app = require('../backend/server');
 const bcrypt = require("bcrypt");
 const { ObjectId } = require("mongodb");
 
-let mongo;
 let db;
 
 let user = {
@@ -20,7 +19,7 @@ beforeAll(async () => {
     // mongo = await DbOperations.connect();
     // db = mongo.db();
 
-    db = await DbOperations.getDB();
+    db = await DbConnection.getDB();
 
     // Add a user to the database
     const newPassword = await bcrypt.hash(user.password, 10);
@@ -37,7 +36,7 @@ afterAll(async () => {
     // deleteeee
     await db.collection('users').deleteOne({ _id: userID });
     // await mongo.close();
-    await DbOperations.closeMongoDBConnection();
+    await DbConnection.closeMongoDBConnection();
 });
 
 describe('User login', () => {
@@ -180,6 +179,19 @@ describe('User profile info', () => {
             "looking for": ['gamers']
         });
     });
+
+    // User profile page displays name correctly (success flow) with id
+    it('Successfully gets user page', async () => {
+        const resp = await request(app)
+            .get('/users/username');
+        expect(resp.status).toBe(200);
+        expect(resp.type).toBe('application/json');
+        expect(resp.body.data).toMatchObject({
+            skills: ['gaming', 'coding'],
+            "looking for": ['gamers']
+        });
+    });
+
 
     // Displays no user found if wrong profile (failure flow)
     it('Tries to access nonexistant user', async () => {

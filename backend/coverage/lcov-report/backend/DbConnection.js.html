@@ -3,15 +3,15 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for backend/utils/auth.js</title>
+    <title>Code coverage report for backend/DbConnection.js</title>
     <meta charset="utf-8" />
-    <link rel="stylesheet" href="../../prettify.css" />
-    <link rel="stylesheet" href="../../base.css" />
-    <link rel="shortcut icon" type="image/x-icon" href="../../favicon.png" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <link rel="shortcut icon" type="image/x-icon" href="../favicon.png" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <style type='text/css'>
         .coverage-summary .sorter {
-            background-image: url(../../sort-arrow-sprite.png);
+            background-image: url(../sort-arrow-sprite.png);
         }
     </style>
 </head>
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">backend/utils</a> auth.js</h1>
+        <h1><a href="../index.html">All files</a> / <a href="index.html">backend</a> DbConnection.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.38% </span>
+                <span class="strong">94.44% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>11/21</span>
+                <span class='fraction'>17/18</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">0% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>0/2</span>
+                <span class='fraction'>2/2</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">100% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>3/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">52.38% </span>
+                <span class="strong">94.44% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>11/21</span>
+                <span class='fraction'>17/18</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line high'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -120,21 +120,12 @@
 <a name='L55'></a><a href='#L55'>55</a>
 <a name='L56'></a><a href='#L56'>56</a>
 <a name='L57'></a><a href='#L57'>57</a>
-<a name='L58'></a><a href='#L58'>58</a>
-<a name='L59'></a><a href='#L59'>59</a>
-<a name='L60'></a><a href='#L60'>60</a>
-<a name='L61'></a><a href='#L61'>61</a>
-<a name='L62'></a><a href='#L62'>62</a>
-<a name='L63'></a><a href='#L63'>63</a>
-<a name='L64'></a><a href='#L64'>64</a>
-<a name='L65'></a><a href='#L65'>65</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L58'></a><a href='#L58'>58</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -146,11 +137,15 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -162,28 +157,12 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -191,71 +170,71 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">/**
- * This module contains authentication and session functions
- */
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">// import the mongodb driver
+const { MongoClient } = require("mongodb");
 &nbsp;
-// import JWT
-const jwt = require("jsonwebtoken");
-&nbsp;
-// import the env variables
 require("dotenv").config();
 &nbsp;
-// import DB function
-const { getStudentByName } = require("../DbOperations");
+const dbUser = process.env.DB_USER;
+const dbPassword = process.env.DB_PASSWORD;
+&nbsp;
+// the mongodb server URL
+const dbURL = `mongodb+srv://${dbUser}:${dbPassword}@cis3500group15.ogicd3s.mongodb.net/?retryWrites=true&amp;w=majority&amp;appName=cis3500group15`;
 &nbsp;
 /**
- * Create a JWT containing the username
- * @param {*} userid
- * @returns the token
+ * MongoDB database connection
+ * It will be exported so we can close the connection
+ * after running our tests
  */
-&nbsp;
-const secret = process.env.KEY;
-&nbsp;
-const authenticateUser = (userid) =&gt; {
+let MongoConnection;
+// connection to the db
+const connect = async () =&gt; {
+  // always use try/catch to handle any exception
   try {
-    const token = jwt.sign({ username: userid }, secret, { expiresIn: "120s" });
-    console.log("token", token);
-    return token;
+    MongoConnection = await MongoClient.connect(dbURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }); // we return the entire connection, not just the DB
+    // check that we are connected to the db
+    console.log(`connected to db: ${MongoConnection.db().databaseName}`);
+    return MongoConnection;
   } catch (err) {
-<span class="cstat-no" title="statement not covered" >    return console.log("error", err.message);</span>
+<span class="cstat-no" title="statement not covered" >    return console.log(err.message);</span>
   }
 };
 &nbsp;
 /**
- * Verify a token. Check if the user is valid
- * @param {*} token
- * @returns true if the user is valid
+ *
+ * @returns the database attached to this MongoDB connection
  */
-const verifyUser = <span class="fstat-no" title="function not covered" >as</span>ync (token) =&gt; {
-<span class="cstat-no" title="statement not covered" >  try {</span>
-    // decoded contains the paylod of the token
-    const decoded = <span class="cstat-no" title="statement not covered" >jwt.verify(token, secret);</span>
-<span class="cstat-no" title="statement not covered" >    console.log("payload", decoded);</span>
-    // check that the payload contains a valid user
-    const user = <span class="cstat-no" title="statement not covered" >await getStudentByName(decoded.username);</span>
-<span class="cstat-no" title="statement not covered" >    if (!user) {</span>
-      // user is undefined
-<span class="cstat-no" title="statement not covered" >      return false;</span>
-    }
-<span class="cstat-no" title="statement not covered" >    return true;</span>
-  } catch (err) {
-    // invalid token
-<span class="cstat-no" title="statement not covered" >    console.log("error", err.message);</span>
-<span class="cstat-no" title="statement not covered" >    return false;</span>
+const getDB = async () =&gt; {
+  // test if there is an active connection
+  if (!MongoConnection) {
+    await connect();
   }
+  return MongoConnection.db();
 };
 &nbsp;
 /**
-const main = () =&gt;{
-    const token = authenticateUser('cis3500');
-    verifyUser(token);
-}
-main();
-*/
+ *
+ * Close the mongodb connection
+ */
+const closeMongoDBConnection = async () =&gt; {
+  await MongoConnection.close();
+};
 &nbsp;
-module.exports = { authenticateUser, verifyUser };
-&nbsp;</pre></td></tr></table></pre>
+module.exports = {
+  closeMongoDBConnection,
+  getDB,
+  connect,
+};</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
@@ -264,14 +243,14 @@ module.exports = { authenticateUser, verifyUser };
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
                 at 2024-04-14T06:28:47.373Z
             </div>
-        <script src="../../prettify.js"></script>
+        <script src="../prettify.js"></script>
         <script>
             window.onload = function () {
                 prettyPrint();
             };
         </script>
-        <script src="../../sorter.js"></script>
-        <script src="../../block-navigation.js"></script>
+        <script src="../sorter.js"></script>
+        <script src="../block-navigation.js"></script>
     </body>
 </html>
     

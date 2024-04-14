@@ -40,7 +40,7 @@ webapp.post("/login", async (req, res) => {
   if (!req.body.email || !req.body.password) {
     // trust me bro
     const v = !req.body.email && !req.body.password ? "email and password" : !req.body.email ? "email" : "password";
-    res.status(400).json({ error: `empty or missing name: ${v}` });
+    res.status(400).json({ error: `empty or missing ${v}` });
     return;
   }
 
@@ -67,7 +67,7 @@ webapp.post("/login", async (req, res) => {
   // authenticate the user
   try {
     const token = authenticateUser(req.body.email);
-    res.status(201).json({ apptoken: token });
+    res.status(200).json({ apptoken: token });
   } catch (err) {
     res.status(401).json({ error: "authentication failed" });
   }
@@ -78,13 +78,9 @@ webapp.post("/login", async (req, res) => {
  * to register new user
  */
 webapp.post("/register", async (req, resp) => {
-  // parse the body
-  console.log(req.body);
-  console.log(req.body.email);
-
   if (!req.body.email || !req.body.password) {
     const v = !req.body.email && !req.body.password ? "email and password" : !req.body.email ? "email" : "password";
-    resp.status(400).json({ error: `empty or missing name: ${v}` });
+    resp.status(400).json({ error: `empty or missing ${v}` });
     return;
   }
 
@@ -119,9 +115,9 @@ webapp.post("/register", async (req, resp) => {
 webapp.get("/users", async (req, resp) => {
   try {
     // get the data from the DB
-    const students = await dbLib.getStudents();
+    const users = await dbLib.getUsers();
     // send response
-    resp.status(200).json({ data: students });
+    resp.status(200).json({ data: users });
   } catch (err) {
     // send the error code
     resp.status(400).json({ message: "There was an error" });
@@ -129,15 +125,15 @@ webapp.get("/users", async (req, resp) => {
 });
 
 /**
- * route implementation GET /student/:id
+ * route implementation GET /users/:email
  */
-webapp.get("/users/:id", async (req, res) => {
-  console.log(`find user with id: ${req.params.id}`);
+webapp.get("/users/:email", async (req, res) => {
+  console.log(`find user with id: ${req.params.email}`);
   try {
     // get the data from the db
-    const results = await dbLib.getUserByEmail(req.params.id);
-    if (results === undefined) {
-      res.status(404).json({ error: "unknown student" });
+    const results = await dbLib.getUserByEmail(req.params.email);
+    if (results === null) {
+      res.status(404).json({ error: "unknown user" });
       return;
     }
     // send the response with the appropriate status code
@@ -147,27 +143,27 @@ webapp.get("/users/:id", async (req, res) => {
   }
 });
 
-/**
- * route implementation DELETE /student/:id
- */
-webapp.delete("/student/:id", async (req, res) => {
-  try {
-    const result = await dbLib.deleteStudent(req.params.id);
-    if (result.deletedCount === 0) {
-      res.status(404).json({ error: "student not in the system" });
-      return;
-    }
-    // send the response with the appropriate status code
-    res.status(200).json({ message: result });
-  } catch (err) {
-    res.status(400).json({ message: "there was error" });
-  }
-});
+// /**
+//  * route implementation DELETE /student/:id
+//  */
+// webapp.delete("/student/:id", async (req, res) => {
+//   try {
+//     const result = await dbLib.deleteStudent(req.params.id);
+//     if (result.deletedCount === 0) {
+//       res.status(404).json({ error: "student not in the system" });
+//       return;
+//     }
+//     // send the response with the appropriate status code
+//     res.status(200).json({ message: result });
+//   } catch (err) {
+//     res.status(400).json({ message: "there was error" });
+//   }
+// });
 
 /**
- * route implementation PUT /student/:id
+ * route implementation PUT /student/:email
  */
-webapp.put("/users/:id", async (req, res) => {
+webapp.put("/users/:email", async (req, res) => {
   console.log(`UPDATE a student with`);
   console.log(req.body);
   // parse the body of the request
@@ -176,7 +172,7 @@ webapp.put("/users/:id", async (req, res) => {
     return;
   }
   try {
-    const result = await dbLib.updateUserByEmail(req.params.id, req.body.info);
+    const result = await dbLib.updateUserByEmail(req.params.email, req.body.info);
     // send the response with the appropriate status code
     res.status(200).json({ message: result });
   } catch (err) {

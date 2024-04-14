@@ -6,61 +6,10 @@
  * in the API documentation
  */
 
-// import the mongodb driver
-const { MongoClient } = require("mongodb");
+const { getDB } = require('../backend/DbConnection')
 
 // import ObjectID
 const { ObjectId } = require("mongodb");
-
-require("dotenv").config();
-
-const dbUser = process.env.DB_USER;
-const dbPassword = process.env.DB_PASSWORD;
-
-// the mongodb server URL
-const dbURL = `mongodb+srv://${dbUser}:${dbPassword}@cis3500group15.ogicd3s.mongodb.net/?retryWrites=true&w=majority&appName=cis3500group15`;
-
-/**
- * MongoDB database connection
- * It will be exported so we can close the connection
- * after running our tests
- */
-let MongoConnection;
-// connection to the db
-const connect = async () => {
-  // always use try/catch to handle any exception
-  try {
-    MongoConnection = await MongoClient.connect(dbURL, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    }); // we return the entire connection, not just the DB
-    // check that we are connected to the db
-    console.log(`connected to db: ${MongoConnection.db().databaseName}`);
-    return MongoConnection;
-  } catch (err) {
-    return console.log(err.message);
-  }
-};
-
-/**
- *
- * @returns the database attached to this MongoDB connection
- */
-const getDB = async () => {
-  // test if there is an active connection
-  if (!MongoConnection) {
-    await connect();
-  }
-  return MongoConnection.db();
-};
-
-/**
- *
- * Close the mongodb connection
- */
-const closeMongoDBConnection = async () => {
-  await MongoConnection.close();
-};
 
 /**
  * READ all the users (HTTP GET /users)
@@ -142,7 +91,7 @@ const getUserByEmail = async (email) => {
     const db = await getDB();
     const result = await db.collection("users").findOne({ email: email });
     // print the result
-    console.log(`user: ${JSON.stringify(result)}`);
+    //console.log(`user: ${JSON.stringify(result)}`);
     return result;
   } catch (err) {
     return console.log(`error: ${err.message}`);
@@ -207,38 +156,35 @@ const updateUserByEmail = async (email, newInfo) => {
   }
 };
 
-/**
- * DELETE a user (DELETE /user/:id)
- * https://app.swaggerhub.com/apis/ericfouh/usersRoster_App/1.0.0#/users/deleteuser
- * @param {userID} the id of the user
- * @returns the result/status of the delete operation
- */
+// /**
+//  * DELETE a user (DELETE /user/:id)
+//  * https://app.swaggerhub.com/apis/ericfouh/usersRoster_App/1.0.0#/users/deleteuser
+//  * @param {userID} the id of the user
+//  * @returns the result/status of the delete operation
+//  */
 
-const deleteUser = async (userID) => {
-  try {
-    // get the db
-    const db = await getDB();
-    const result = await db
-      .collection("users")
-      .deleteOne({ _id: new ObjectId(userID) });
-    // print the result
-    console.log(`user: ${JSON.stringify(result)}`);
-    return result;
-  } catch (err) {
-    return console.log(`error: ${err.message}`);
-  }
-};
+// const deleteUser = async (userID) => {
+//   try {
+//     // get the db
+//     const db = await getDB();
+//     const result = await db
+//       .collection("users")
+//       .deleteOne({ _id: new ObjectId(userID) });
+//     // print the result
+//     console.log(`user: ${JSON.stringify(result)}`);
+//     return result;
+//   } catch (err) {
+//     return console.log(`error: ${err.message}`);
+//   }
+// };
 
 // export the functions
 module.exports = {
-  closeMongoDBConnection,
-  getDB,
-  connect,
   addUser,
   getUserByEmail,
   getUsers,
   getUser,
   updateUser,
   updateUserByEmail,
-  deleteUser,
+  // deleteUser,
 };
