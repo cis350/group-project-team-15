@@ -20,26 +20,32 @@ function Profile() {
   const verifyTokenAndEmail = async () => {
     const token = sessionStorage.getItem("appToken");
 
-  if (!token) {
-    console.error('Missing token');
-    return;
-  }
+    if (!token) {
+      console.error("Missing token");
+      return;
+    }
 
-  try {
-    console.log("token", token)
-    const response = await axios.post('http://localhost:8080/verify', { token });
-    if (response.data && response.data.data && response.data.data.email === id) {
-      // If 'data' exists and is not null, the token is valid
-      setIsOwner(true);
-    } else {
-      // No user data returned means the token is invalid
-      console.error('Invalid token');
+    try {
+      console.log("token", token);
+      const response = await axios.post("http://localhost:8080/verify", {
+        token,
+      });
+      if (
+        response.data &&
+        response.data.data &&
+        response.data.data.email === id
+      ) {
+        // If 'data' exists and is not null, the token is valid
+        setIsOwner(true);
+      } else {
+        // No user data returned means the token is invalid
+        console.error("Invalid token");
+        setIsOwner(false);
+      }
+    } catch (error) {
+      console.error("Error verifying token", error);
       setIsOwner(false);
     }
-  } catch (error) {
-    console.error('Error verifying token', error);
-    setIsOwner(false);
-  }
   };
 
   const fetchData = async (id) => {
@@ -57,7 +63,7 @@ function Profile() {
       await verifyTokenAndEmail(); // Verify must complete before fetch
       fetchData(id);
     };
-  
+
     verifyAndFetch();
   }, [id]);
 
@@ -162,16 +168,17 @@ function Profile() {
             </div>
             {
               <div className="py-2">
-                {isOwner && <button
-                  onClick={() => {
-                    setDisplayLookingFor(!displayLookingFor);
-                  }}
-                  className="bg-blue-100 p-3 text-sm font-semibold rounded-2xl
+                {isOwner && (
+                  <button
+                    onClick={() => {
+                      setDisplayLookingFor(!displayLookingFor);
+                    }}
+                    className="bg-blue-100 p-3 text-sm font-semibold rounded-2xl
                            hover:bg-blue-200 duration-100"
-                >
-                  Update Skills
-                </button>
-                }
+                  >
+                    Update Skills
+                  </button>
+                )}
                 {displayLookingFor && (
                   <ConfigureSkills
                     skills={

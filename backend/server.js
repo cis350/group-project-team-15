@@ -39,7 +39,12 @@ webapp.post("/login", async (req, res) => {
   // check that the name was sent in the body
   if (!req.body.email || !req.body.password) {
     // trust me bro
-    const v = !req.body.email && !req.body.password ? "email and password" : !req.body.email ? "email" : "password";
+    const v =
+      !req.body.email && !req.body.password
+        ? "email and password"
+        : !req.body.email
+        ? "email"
+        : "password";
     res.status(400).json({ error: `empty or missing ${v}` });
     return;
   }
@@ -79,7 +84,12 @@ webapp.post("/login", async (req, res) => {
  */
 webapp.post("/register", async (req, resp) => {
   if (!req.body.email || !req.body.password) {
-    const v = !req.body.email && !req.body.password ? "email and password" : !req.body.email ? "email" : "password";
+    const v =
+      !req.body.email && !req.body.password
+        ? "email and password"
+        : !req.body.email
+        ? "email"
+        : "password";
     resp.status(400).json({ error: `empty or missing ${v}` });
     return;
   }
@@ -98,7 +108,7 @@ webapp.post("/register", async (req, resp) => {
       email: req.body.email,
       password: hashedPassword,
       skills: [],
-      "looking for": []
+      "looking for": [],
     };
     console.log(newUser);
     const result = await dbLib.addUser(newUser);
@@ -197,15 +207,16 @@ webapp.put("/users/:email", async (req, res) => {
     return;
   }
   try {
-    const result = await dbLib.updateUserByEmail(req.params.email, req.body.info);
+    const result = await dbLib.updateUserByEmail(
+      req.params.email,
+      req.body.info
+    );
     // send the response with the appropriate status code
     res.status(200).json({ message: result });
   } catch (err) {
     res.status(404).json({ message: `error: ${err}` });
   }
 });
-
-
 
 // export the webapp
 module.exports = webapp;

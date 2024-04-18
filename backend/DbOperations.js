@@ -6,7 +6,7 @@
  * in the API documentation
  */
 
-const { getDB } = require('../backend/DbConnection')
+const { getDB } = require("../backend/DbConnection");
 
 // import ObjectID
 const { ObjectId } = require("mongodb");

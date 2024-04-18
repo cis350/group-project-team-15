@@ -9,7 +9,11 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 // import DB function
-const { getStudentByName, getUser, getUserByEmail } = require("../DbOperations");
+const {
+  getStudentByName,
+  getUser,
+  getUserByEmail,
+} = require("../DbOperations");
 
 /**
  * Create a JWT containing the username
