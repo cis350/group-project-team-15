@@ -34,7 +34,8 @@ function Login() {
       password: password
     }).then((response) => {
       console.log(response);
-      sessionStorage.setItem('appToken', response.data.token);
+      sessionStorage.setItem('appToken', response.data.apptoken);
+      console.log('Token set:', sessionStorage.getItem('appToken'));
       sessionStorage.setItem('email', email);
       navigate(`/profile/${email}`);
     })

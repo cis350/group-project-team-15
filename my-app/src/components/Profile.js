@@ -26,14 +26,19 @@ function Profile() {
   }
 
   try {
+    console.log("token", token)
     const response = await axios.post('http://localhost:8080/verify', { token });
-    if (!response.data.valid) {
-      console.error('Invalid token');
-    } else {
+    if (response.data && response.data.data && response.data.data.email === id) {
+      // If 'data' exists and is not null, the token is valid
       setIsOwner(true);
+    } else {
+      // No user data returned means the token is invalid
+      console.error('Invalid token');
+      setIsOwner(false);
     }
   } catch (error) {
     console.error('Error verifying token', error);
+    setIsOwner(false);
   }
   };
 
@@ -48,8 +53,12 @@ function Profile() {
   };
 
   useEffect(() => {
-    fetchData(id);
-    verifyTokenAndEmail();
+    const verifyAndFetch = async () => {
+      await verifyTokenAndEmail(); // Verify must complete before fetch
+      fetchData(id);
+    };
+  
+    verifyAndFetch();
   }, [id]);
 
   if (!userData) {

@@ -121,11 +121,13 @@ webapp.post("/verify", async (req, res) => {
 
   // verify the token
   try {
+    console.log("verifying token", req.body);
     const user = await verifyUser(req.body.token);
     if (!user) {
-      res.status(401).json({ error: "authentication failed" });
+      res.status(401).json({ error: "no user in token" });
       return;
     }
+    console.log("user", user);
     res.status(200).json({ data: user });
   } catch (err) {
     res.status(401).json({ error: "authentication failed" });

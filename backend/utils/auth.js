@@ -9,7 +9,7 @@ const jwt = require("jsonwebtoken");
 require("dotenv").config();
 
 // import DB function
-const { getStudentByName, getUser } = require("../DbOperations");
+const { getStudentByName, getUser, getUserByEmail } = require("../DbOperations");
 
 /**
  * Create a JWT containing the username
@@ -40,7 +40,10 @@ const verifyUser = async (token) => {
     const decoded = jwt.verify(token, secret);
     console.log("payload", decoded);
     // check that the payload contains a valid user
-    const user = await getUser(decoded.username);
+    const user = await getUserByEmail(decoded.username);
+    if (!user) {
+      return false;
+    }
     return user;
   } catch (err) {
     // invalid token
