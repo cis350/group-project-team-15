@@ -8,23 +8,48 @@ import ConfigureSkills from "./ConfigureSkills";
 function Profile() {
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
+
   const [displayUpdate, setDisplayUpdate] = useState(false);
   const [displayLookingFor, setDisplayLookingFor] = useState(false);
+
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(`http://localhost:8080/users/${id}`);
-        const data = response.data.data;
-        setUserData(data);
-      } catch (err) {
-        console.error(err);
-      }
-    };
+  const [isOwner, setIsOwner] = useState(false);
 
-    fetchData();
+  const verifyTokenAndEmail = async () => {
+    const token = sessionStorage.getItem("appToken");
+
+  if (!token) {
+    console.error('Missing token');
+    return;
+  }
+
+  try {
+    const response = await axios.post('http://localhost:8080/verify', { token });
+    if (!response.data.valid) {
+      console.error('Invalid token');
+    } else {
+      setIsOwner(true);
+    }
+  } catch (error) {
+    console.error('Error verifying token', error);
+  }
+  };
+
+  const fetchData = async (id) => {
+    try {
+      const response = await axios.get(`http://localhost:8080/users/${id}`);
+      const data = response.data.data;
+      setUserData(data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
+
+  useEffect(() => {
+    fetchData(id);
+    verifyTokenAndEmail();
   }, [id]);
 
   if (!userData) {
@@ -37,8 +62,8 @@ function Profile() {
         id: id,
         info: [
           {
-            "key": key,
-            "value": value,
+            key: key,
+            value: value,
           },
         ],
       });
@@ -91,15 +116,17 @@ function Profile() {
             </div>
             {
               <div className="py-2">
-                <button
-                  onClick={() => {
-                    setDisplayUpdate(!displayUpdate);
-                  }}
-                  className="bg-blue-100 p-3 text-sm font-semibold rounded-2xl
+                {isOwner && (
+                  <button
+                    onClick={() => {
+                      setDisplayUpdate(!displayUpdate);
+                    }}
+                    className="bg-blue-100 p-3 text-sm font-semibold rounded-2xl
                            hover:bg-blue-200 duration-100"
-                >
-                  Update Skills
-                </button>
+                  >
+                    Update Skills
+                  </button>
+                )}
                 {displayUpdate && (
                   <ConfigureSkills
                     skills={userData.skills ? userData.skills : []}
@@ -126,7 +153,7 @@ function Profile() {
             </div>
             {
               <div className="py-2">
-                <button
+                {isOwner && <button
                   onClick={() => {
                     setDisplayLookingFor(!displayLookingFor);
                   }}
@@ -135,6 +162,7 @@ function Profile() {
                 >
                   Update Skills
                 </button>
+                }
                 {displayLookingFor && (
                   <ConfigureSkills
                     skills={

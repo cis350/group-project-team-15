@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1713076127385" clover="3.2.0">
-  <project timestamp="1713076127385" name="All files">
+<coverage generated="1713316894533" clover="3.2.0">
+  <project timestamp="1713316894533" name="All files">
     <metrics statements="165" coveredstatements="123" conditionals="34" coveredconditionals="30" methods="19" coveredmethods="14" elements="218" coveredelements="167" complexity="0" loc="165" ncloc="165" packages="2" files="4" classes="4"/>
     <package name="backend">
       <metrics statements="144" coveredstatements="112" conditionals="32" coveredconditionals="30" methods="17" coveredmethods="13"/>
-      <file name="DbConnection.js" path="/Users/cedricc/Documents/Penn/CIS-3500/group-project-team-15/backend/DbConnection.js">
+      <file name="DbConnection.js" path="C:\Users\xiang\group-project-team-15-1\backend\DbConnection.js">
         <metrics statements="18" coveredstatements="17" conditionals="2" coveredconditionals="2" methods="3" coveredmethods="3"/>
         <line num="2" count="1" type="stmt"/>
         <line num="4" count="1" type="stmt"/>
@@ -25,7 +25,7 @@
         <line num="51" count="1" type="stmt"/>
         <line num="54" count="1" type="stmt"/>
       </file>
-      <file name="DbOperations.js" path="/Users/cedricc/Documents/Penn/CIS-3500/group-project-team-15/backend/DbOperations.js">
+      <file name="DbOperations.js" path="C:\Users\xiang\group-project-team-15-1\backend\DbOperations.js">
         <metrics statements="54" coveredstatements="34" conditionals="0" coveredconditionals="0" methods="8" coveredmethods="5"/>
         <line num="9" count="1" type="stmt"/>
         <line num="12" count="1" type="stmt"/>
@@ -82,7 +82,7 @@
         <line num="155" count="0" type="stmt"/>
         <line num="182" count="1" type="stmt"/>
       </file>
-      <file name="server.js" path="/Users/cedricc/Documents/Penn/CIS-3500/group-project-team-15/backend/server.js">
+      <file name="server.js" path="C:\Users\xiang\group-project-team-15-1\backend\server.js">
         <metrics statements="72" coveredstatements="61" conditionals="30" coveredconditionals="28" methods="6" coveredmethods="5"/>
         <line num="6" count="1" type="stmt"/>
         <line num="7" count="1" type="stmt"/>
@@ -160,7 +160,7 @@
     </package>
     <package name="backend.utils">
       <metrics statements="21" coveredstatements="11" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="1"/>
-      <file name="auth.js" path="/Users/cedricc/Documents/Penn/CIS-3500/group-project-team-15/backend/utils/auth.js">
+      <file name="auth.js" path="C:\Users\xiang\group-project-team-15-1\backend\utils\auth.js">
         <metrics statements="21" coveredstatements="11" conditionals="2" coveredconditionals="0" methods="2" coveredmethods="1"/>
         <line num="6" count="1" type="stmt"/>
         <line num="9" count="1" type="stmt"/>

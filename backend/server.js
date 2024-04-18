@@ -110,6 +110,29 @@ webapp.post("/register", async (req, resp) => {
 });
 
 /**
+ * route implementation POST /verify
+ */
+webapp.post("/verify", async (req, res) => {
+  // check that the token was sent in the body
+  if (!req.body.token) {
+    res.status(400).json({ error: "missing token" });
+    return;
+  }
+
+  // verify the token
+  try {
+    const user = await verifyUser(req.body.token);
+    if (!user) {
+      res.status(401).json({ error: "authentication failed" });
+      return;
+    }
+    res.status(200).json({ data: user });
+  } catch (err) {
+    res.status(401).json({ error: "authentication failed" });
+  }
+});
+
+/**
  * route implementation GET /students
  */
 webapp.get("/users", async (req, resp) => {
@@ -179,6 +202,8 @@ webapp.put("/users/:email", async (req, res) => {
     res.status(404).json({ message: `error: ${err}` });
   }
 });
+
+
 
 // export the webapp
 module.exports = webapp;
