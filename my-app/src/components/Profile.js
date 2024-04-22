@@ -219,7 +219,7 @@ const [searchResults, setSearchResults] = useState([]);
         <div className="search-container">
           <input
             type="text"
-            placeholder="Find some skills to exchange!"
+            placeholder="Find some skills to exchange! (Press Enter)"
             className="search"
             value={searchTerm}
             onChange={handleSearchChange}
