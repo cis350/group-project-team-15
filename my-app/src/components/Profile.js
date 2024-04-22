@@ -12,6 +12,9 @@ function Profile() {
   const [displayUpdate, setDisplayUpdate] = useState(false);
   const [displayLookingFor, setDisplayLookingFor] = useState(false);
 
+  const [searchTerm, setSearchTerm] = useState('');
+const [searchResults, setSearchResults] = useState([]);
+
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
@@ -58,6 +61,28 @@ function Profile() {
     }
   };
 
+  const fetchSearchResults = async () => {
+    if (searchTerm.trim()) {
+      try {
+        const response = await axios.get(`http://localhost:8080/skill-search/${encodeURIComponent(searchTerm.trim())}`);
+        setSearchResults(response.data.data || []);
+      } catch (err) {
+        console.error('Failed to fetch search results', err);
+        setSearchResults([]);
+      }
+    }
+  };
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      fetchSearchResults();
+    }
+  };
+
+  const handleSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+  };
+  
   useEffect(() => {
     const verifyAndFetch = async () => {
       await verifyTokenAndEmail(); // Verify must complete before fetch
@@ -196,9 +221,16 @@ function Profile() {
             type="text"
             placeholder="Find some skills to exchange!"
             className="search"
+            value={searchTerm}
+            onChange={handleSearchChange}
+            onKeyPress={handleKeyPress}
           />
           <div className="search-results">
-            {/* Search results will be displayed here */}
+            {searchResults.map((user) => (
+              <div key={user._id} className="search-result-item">
+                {user.email} - Skills: {user.skills.join(", ")}
+              </div>
+            ))}
           </div>
         </div>
       </div>
