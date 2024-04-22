@@ -135,21 +135,39 @@ const updateUser = async (userID, newInfo) => {
  * @returns
  */
 const updateUserByEmail = async (email, newInfo) => {
-  console.log(newInfo);
   const updateObj = {};
   newInfo.forEach((kv) => {
-    console.log(kv);
     updateObj[kv.key] = kv.value;
   });
-  console.log(email);
-  console.log(`new obj: `);
-  console.log(updateObj);
   try {
     // get the db
     const db = await getDB();
     const result = await db
       .collection("users")
       .updateOne({ email: email }, { $set: updateObj });
+    return result;
+  } catch (err) {
+    return console.log(`error: ${err.message}`);
+  }
+};
+
+const searchUsersBySkill = async (skill) => {
+  try {
+    // get the db
+    const db = await getDB();
+    const users = await db.collection("users");
+    // function which checks if a user has the skill
+    const userMatch = (user) => {
+      user.skills.forEach(skill => {
+        if(skill.toLowerCase().indexOf(skill.toLowerCase()) !== -1)
+          return true;
+      });
+      return false;
+    };
+    // return array of all matching users
+    // TODO: strip user objects of sensitive data like passwords
+    const query = { skills: { $elemMatch: { $regex: skill, $options: 'i' } } };
+    const result = await users.find(query).toArray();
     return result;
   } catch (err) {
     return console.log(`error: ${err.message}`);
@@ -186,5 +204,6 @@ module.exports = {
   getUser,
   updateUser,
   updateUserByEmail,
+  searchUsersBySkill
   // deleteUser,
 };
