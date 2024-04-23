@@ -1,23 +1,25 @@
 import React, { useState } from 'react';
+import IconButton from '@mui/material/IconButton';
+import CloseIcon from '@mui/icons-material/Close';
 
 function ConfigureSkills(props) {
     const [skillArray, setSkillArray] = useState(props.skills);
     const [hasError, setHasError] = useState(false);
     const [errorMessage, setErrorMessage] = useState("");
 
-    function addSkill (skill, id) {
+    function addSkill(skill, id) {
         setSkillArray([...skillArray, skill]);
     }
 
-    function removeSkill (id) {
+    function removeSkill(id) {
         setSkillArray(skillArray.filter((skill, index) => index !== id));
     }
 
-    function changeSkillName (id, value) {
+    function changeSkillName(id, value) {
         setSkillArray(skillArray.map((skill, index) => index === id ? value : skill));
     }
 
-    function updateSkills () {
+    function updateSkills() {
         setHasError(false);
         const emptyCount = skillArray.filter((skill) => skill === "").length;
         if (emptyCount > 0) {
@@ -29,16 +31,24 @@ function ConfigureSkills(props) {
         props.updateSkills(skillArray);
     }
 
-    function skillTag (skill, id) {
+    function skillTag(skill, id) {
         return (
             <div key={id} className="bg-blue-200 p-2 rounded-2xl h-10 m-1">
-                <input 
+                <input
                     value={skill}
                     onChange={(e) => changeSkillName(id, e.target.value)}
                     className="w-20 bg-blue-200 ml-2"
                 >
                 </input>
-                <button onClick={() => removeSkill(id)} className="w-3 h-3 hover:text-white duration-100"> x</button>
+                <IconButton
+                    onClick={() => removeSkill(id)}
+                    className="w-2 h-2 hover:text-white duration-100"
+                    aria-label="delete"
+                >
+                    <CloseIcon
+                        fontSize="small"
+                    />
+                </IconButton>
             </div>
         );
     }
@@ -48,7 +58,7 @@ function ConfigureSkills(props) {
             <div className="flex flex-wrap w-full space-x-2 p-2 outline-2 outline-gray-500 
                             outline py-2 my-2 rounded-lg overflow-y-scroll">
                 {skillArray.map((skill, id) => skillTag(skill, id))}
-                <button 
+                <button
                     className="w-10 h-10 m-1 bg-slate-100 rounded-3xl hover:bg-slate-300 duration-100"
                     onClick={() => addSkill("", skillArray.length)}
                 >+</button>
@@ -58,10 +68,10 @@ function ConfigureSkills(props) {
                 className="rounded-2xl ml-3 bg-slate-200 p-3 text-sm hover:bg-slate-300 duration-100"
                 onClick={() => updateSkills()}
             >
-             Save changes
+                Save changes
             </button>
         </div>
     );
 }
 
-export default ConfigureSkills;
+export default module;

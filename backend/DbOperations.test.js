@@ -1,16 +1,17 @@
 const request = require('supertest');
-const DbConnection = require('../backend/DbConnection');
-const app = require('../backend/server');
-const bcrypt = require("bcrypt");
-const { ObjectId } = require("mongodb");
+const bcrypt = require('bcrypt');
+const { ObjectId } = require('mongodb');
+
+const DbConnection = require('./DbConnection');
+const app = require('./server');
 
 let db;
 
-let user = {
+const user = {
     email: 'username',
     password: 'password',
     skills: ['gaming', 'coding'],
-    "looking for": ['gamers']
+    'looking for': ['gamers'],
 };
 
 let userID;
@@ -40,7 +41,6 @@ afterAll(async () => {
 });
 
 describe('User login', () => {
-
     // Login user with valid username and password (success flow)
     it('User can login with correct username/password', async () => {
         const resp = await request(app)
@@ -101,7 +101,6 @@ describe('User login', () => {
 });
 
 describe('Register', () => {
-
     // Registered user with a valid username and password (success flow)
     it('User can register with a valid username and password', async () => {
         const resp = await request(app)
@@ -256,4 +255,22 @@ describe('Skill editing', () => {
         const getUpdatedUser = await db.collection('users').findOne({ _id: new ObjectId(userID) });
         expect(getUpdatedUser["looking for"]).toEqual(expect.arrayContaining(['jazz musicians']));
     });
+});
+
+describe('Skill searching', () => {
+  it('Search for a skill', async () => {
+    const resp = await request(app).get('/skill-search/drawing');
+
+    const containsBbob = (arr) => {
+      let ret = false;
+      arr.forEach((item) => {
+        if (item.email === 'bbob') ret = true;
+      });
+      return ret;
+    };
+
+    expect(resp.status).toBe(200);
+    expect(resp.type).toBe('application/json');
+    expect(containsBbob(resp.body.data)).toBe(true);
+  });
 });

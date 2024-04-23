@@ -156,14 +156,6 @@ const searchUsersBySkill = async (skill) => {
     // get the db
     const db = await getDB();
     const users = await db.collection("users");
-    // function which checks if a user has the skill
-    const userMatch = (user) => {
-      user.skills.forEach(skill => {
-        if(skill.toLowerCase().indexOf(skill.toLowerCase()) !== -1)
-          return true;
-      });
-      return false;
-    };
     // return array of all matching users
     // TODO: strip user objects of sensitive data like passwords
     const query = { skills: { $elemMatch: { $regex: skill, $options: 'i' } } };
