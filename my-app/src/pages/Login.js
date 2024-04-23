@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useNavigate, Navigate } from "react-router-dom";
-import "./Login.css";
 import logo from '../resources/logo.png';
 
 import Button from '@mui/material/Button';
@@ -9,8 +8,7 @@ import {
   Card,
   CardActions,
   CardContent,
-  CardMedia,
-  Alert
+  CardMedia
 } from '@mui/material'
 import Typography from '@mui/material/Typography';
 
@@ -60,7 +58,7 @@ function Login() {
             title="logo"
           />
           <CardContent>
-            <Typography sx={{ fontSize: 20, fontWeight: 'bold', pb: 2 }}>
+            <Typography sx={{ fontSize: 24, fontWeight: 'bold', pb: 2 }}>
               Login
             </Typography>
             <TextField
@@ -91,10 +89,10 @@ function Login() {
             />
           </CardContent>
           <CardActions sx={{ justifyContent: 'space-between', m: 1, mt: 0 }}>
-            <Button size="small" onClick={() => navigate('/register')}>Create Account</Button>
+            <Button size="medium" onClick={() => navigate('/register')}>Create Account</Button>
             <Button
               type="submit"
-              size="small"
+              size="medium"
               variant="contained"
               disableElevation
             >

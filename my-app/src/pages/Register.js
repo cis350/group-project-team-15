@@ -1,7 +1,6 @@
 import axios from 'axios';
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Login.css";
 import logo from '../resources/logo.png';
 
 import Button from '@mui/material/Button';
@@ -106,7 +105,7 @@ function Register() {
             title="logo"
           />
           <CardContent>
-            <Typography sx={{ fontSize: 20, fontWeight: 'bold', pb: 2 }}>
+            <Typography sx={{ fontSize: 24, fontWeight: 'bold', pb: 2 }}>
               Register
             </Typography>
             <TextField
@@ -149,7 +148,7 @@ function Register() {
             <div></div>
             <Button
               type="submit"
-              size="small"
+              size="medium"
               variant="contained"
               disableElevation
             >

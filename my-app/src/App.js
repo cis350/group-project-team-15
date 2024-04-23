@@ -1,5 +1,7 @@
 import "./App.css";
 
+import { ThemeProvider } from "@mui/material";
+import theme from './resources/theme';
 import { AuthProvider } from "./auth/AuthContext";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 
@@ -13,21 +15,24 @@ import Register from './pages/Register';
 function App() {
 
   return (
-    <Router>
-      <AuthProvider>
-          <Routes>
-            {/* Routes with nav bar */}
-            <Route element={<NavBarPage />}>
-              <Route path="/profile/:id" element={<Profile />} />
-              <Route path="/marketplace" element={<Marketplace />} />
-            </Route>
-            {/* Routes without nav bar */}
-            <Route path='/login' element={<Login />} />
-            <Route path='/register' element={<Register />} />
-            <Route path="/" element={<Navigate to='/login' />} />
-          </Routes>
-      </AuthProvider>
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+          <AuthProvider>
+              <Routes>
+                {/* Routes with nav bar */}
+                <Route element={<NavBarPage />}>
+                  <Route path="/profile/:id" element={<Profile />} />
+                  <Route path="/marketplace" element={<Marketplace />} />
+                </Route>
+                {/* Routes without nav bar */}
+                <Route path='/login' element={<Login />} />
+                <Route path='/register' element={<Register />} />
+                <Route path="/" element={<Navigate to='/login' />} />
+              </Routes>
+          </AuthProvider>
+      </Router>
+    </ThemeProvider>
+
   );
 }
 

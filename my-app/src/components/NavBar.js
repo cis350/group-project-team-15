@@ -13,6 +13,8 @@ import ListItemButton from '@mui/material/ListItemButton';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
 import StorefrontIcon from '@mui/icons-material/Storefront';
+import { AccountCircle } from '@mui/icons-material';
+import { Divider } from '@mui/material';
 
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate, Outlet } from "react-router-dom";
@@ -29,12 +31,17 @@ export function NavBar() {
   };
 
   const menuItems = [
+    { text: 'My Profile', path: '/', icon: <AccountCircle /> },
     { text: 'Marketplace', path: '/marketplace', icon: <StorefrontIcon /> }
   ];
 
   const DrawerList = (
     <Box sx={{ width: 250 }} role="presentation" onClick={toggleDrawer(false)}>
       <List>
+        <ListItem>
+          <Typography sx={{fontWeight:'bold'}}>Menu</Typography>
+        </ListItem>
+        <Divider />
         {menuItems.map(({ text, path, icon }) => (
           <ListItem key={text} disablePadding onClick={() => navigate(path)}>
             <ListItemButton>
@@ -52,7 +59,7 @@ export function NavBar() {
   return (
     <Box sx={{ flexGrow: 1 }}>
       <AppBar position="static">
-        <Toolbar>
+        <Toolbar sx={{ display: 'flex', justifyContent: 'space-between' }}>
           <IconButton
             size="large"
             edge="start"
@@ -63,13 +70,16 @@ export function NavBar() {
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-            SkillExchange
-          </Typography>
+          <button sx={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}>
+            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}
+              onClick={() => navigate('/')}>
+              SkillExchange
+            </Typography>
+          </button>
           {isLoggedIn ? (
-            <Button color="inherit" onClick={logout}>Logout</Button>
+            <Button color="inherit" onClick={logout} sx={{ml:'auto'}}>Logout</Button>
           ) : (
-            <Button color="inherit" onClick={() => navigate("/")}>Login</Button>
+            <Button color="inherit" onClick={() => navigate("/")} sx={{ml:'auto'}}>Login</Button>
           )}
           <Drawer open={open} onClose={toggleDrawer(false)}>
             {DrawerList}
