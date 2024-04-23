@@ -5,7 +5,11 @@ import axios from "axios";
 
 import ConfigureSkills from "./ConfigureSkills";
 
+import { useAuth } from "../auth/AuthContext";
+
 function Profile() {
+  const { isLoggedIn, email, logout } = useAuth();
+
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
 
@@ -13,7 +17,7 @@ function Profile() {
   const [displayLookingFor, setDisplayLookingFor] = useState(false);
 
   const [searchTerm, setSearchTerm] = useState('');
-const [searchResults, setSearchResults] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
 
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
@@ -33,18 +37,7 @@ const [searchResults, setSearchResults] = useState([]);
       const response = await axios.post("http://localhost:8080/verify", {
         token,
       });
-      if (
-        response.data &&
-        response.data.data &&
-        response.data.data.email === id
-      ) {
-        // If 'data' exists and is not null, the token is valid
-        setIsOwner(true);
-      } else {
-        // No user data returned means the token is invalid
-        console.error("Invalid token");
-        setIsOwner(false);
-      }
+      setIsOwner(response?.data?.data?.email === id);
     } catch (error) {
       console.error("Error verifying token", error);
       setIsOwner(false);
@@ -82,7 +75,7 @@ const [searchResults, setSearchResults] = useState([]);
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
-  
+
   useEffect(() => {
     const verifyAndFetch = async () => {
       await verifyTokenAndEmail(); // Verify must complete before fetch
@@ -133,8 +126,11 @@ const [searchResults, setSearchResults] = useState([]);
 
   return (
     <div className="profile-container">
+      <div>
+        <button type="button" onClick={logout}>hello</button>
+      </div>
       <div className="header">
-        <h1>Welcome to SkillExchange!</h1>
+        <h1>Welcome to SkillExchange!{isLoggedIn}{email}</h1>
       </div>
       <div className="profile">
         <div className="left-screen">
