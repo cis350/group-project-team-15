@@ -47,7 +47,7 @@ const Marketplace = () => {
                 <div className="outline outline-slate-400 outline-1 w-[30%] p-4 rounded-lg">
                     <h1 className="text-2xl">Marketplace</h1>
                     <div className="py-2">
-                        find some skills or smth idk bro
+                        Find some skills!
                     </div>
                     <TextField
                         id="filled-search"

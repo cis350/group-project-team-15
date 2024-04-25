@@ -74,4 +74,4 @@ function ConfigureSkills(props) {
     );
 }
 
-export default module;
+export default ConfigureSkills;
