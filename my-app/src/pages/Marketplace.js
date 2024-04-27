@@ -54,6 +54,7 @@ const Marketplace = () => {
                         label="Search skills!"
                         type="search"
                         variant="filled"
+                        data-cy="marketplace-search"
 
                         value={searchTerm}
                         onChange={handleSearchChange}
@@ -61,9 +62,9 @@ const Marketplace = () => {
                     />
                 </div>
                 <div className="w-[70%] px-4 rounded-lg">
-                    <div className="grid grid-cols-2 gap-4 w-full">
+                    <div className="grid grid-cols-2 gap-4 w-full" data-cy="search-results">
                         {searchResults.map((user) => (
-                            <div>
+                            <div data-cy={user.email}>
                                 <Box>
                                     <Card variant="outlined">
                                         <React.Fragment>

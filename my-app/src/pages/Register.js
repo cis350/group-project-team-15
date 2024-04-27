@@ -43,7 +43,7 @@ function Register() {
     console.log('Register account', emailInput, passwordInput);
 
     if (passwordInput !== confirmPasswordInput) {
-      setErrorMessage("Passwords must match");
+      setErrorMessage("Error: passwords must match");
       return;
     }
 

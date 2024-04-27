@@ -53,7 +53,7 @@ webapp.post("/login", async (req, res) => {
   const user = await dbLib.getUserByEmail(req.body.email);
 
   if (!user) {
-    res.status(404).json({ error: `user does not exist: ${user}` });
+    res.status(404).json({ error: `email does not exist: ${req.body.email}` });
     return;
   }
 
