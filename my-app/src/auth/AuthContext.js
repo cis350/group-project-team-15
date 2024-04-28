@@ -1,11 +1,20 @@
 import React, { createContext, useState, useContext } from 'react';
-import axios from 'axios';
+
 import { useNavigate } from "react-router-dom";
+import { loginCall } from '../api/login';
 
 const AuthContext = createContext();
 
+const defaultAuthValue = {
+  isLoggedIn: false,
+  email: '',
+  login: async () => {}, // Placeholder function
+  logout: async () => {}, // Placeholder function
+  message: ''
+};
+
 export const useAuth = () => {
-  return useContext(AuthContext);
+  return useContext(AuthContext) || defaultAuthValue;
 }
 
 export const AuthProvider = ({ children }) => {
@@ -14,27 +23,26 @@ export const AuthProvider = ({ children }) => {
   const [message, setMessage] = useState("");
   const navigate = useNavigate();
 
+  async function callLogin(email, password) {
+    const { success, errorMessage } = await loginCall(email, password);
+
+    setIsLoggedIn(success);
+    setMessage(errorMessage);
+
+    if (success) {
+      setEmail(email);
+      setMessage("");
+      console.log(`${email} logged in!`);
+      navigate(`/profile/${email}`);
+    } else {
+      setMessage(errorMessage);
+    }
+  }
+
   const login = (data) => {
     // TODO: login stuff lol!
-    axios.post("http://localhost:8080/login", {
-      email: data.email,
-      password: data.password
-    }).then((response) => {
-      console.log(response);
 
-      localStorage.setItem('appToken', response.data.apptoken);
-      setIsLoggedIn(true);
-
-      localStorage.setItem('email', data.email)
-      setEmail(data.email)
-
-      setMessage("");
-
-      navigate(`/profile/${data.email}`);
-    }).catch((error) => {
-      console.error(error.response.data.error);
-      setMessage(error.response.data.error);
-    });
+    callLogin(data.email, data.password);
   };
 
   const logout = async () => {

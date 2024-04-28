@@ -68,6 +68,7 @@ function Login() {
               name="email"
               autoComplete="email"
               fullWidth
+              placeholder="Enter email"
               value={emailInput}
               onChange={handleInputChange}
               autoFocus
@@ -83,6 +84,7 @@ function Login() {
               type="password"
               autoComplete="current-password"
               fullWidth
+              placeholder="Enter password"
               value={passwordInput}
               onChange={handleInputChange}
               sx={{ mb: 2 }}

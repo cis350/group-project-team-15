@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import logo from '../resources/logo.png';
+import { registerAccount } from '../api/register';
 
 import Button from '@mui/material/Button';
 import {
@@ -37,6 +37,15 @@ function Register() {
     }
   };
 
+  async function registerEvent() {
+    const { success, errorMessage } = await registerAccount(emailInput, passwordInput);
+    setSuccess(success);
+    setErrorMessage(errorMessage);
+    if (success) {
+      setTimeout(() => navigate('/login'), 3000);
+    }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     // Add logic to handle login here
@@ -47,19 +56,7 @@ function Register() {
       return;
     }
 
-    axios.post('http://localhost:8080/register', {
-      email: emailInput,
-      password: passwordInput
-    }).then((response) => {
-      console.log(response);
-      setSuccess(true);
-      setErrorMessage("");
-      // Moves to login page in 3 sec
-      setTimeout(() => navigate('/login'), 3000);
-    }).catch(error => {
-      console.error(error);
-      setErrorMessage(`Error: ${error.response.data.error}`);
-    });
+    registerEvent();
   };
 
   return (

@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 
 import TextField from '@mui/material/TextField';
 import Card from '@mui/material/Card';
@@ -7,31 +6,28 @@ import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
+import { fetchSearchResults } from '../api/marketplace';
+
 const Marketplace = () => {
     const [searchTerm, setSearchTerm] = useState('');
     const [searchResults, setSearchResults] = useState([]);
 
-    const fetchSearchResults = async () => {
+    const querySearch = async () => {
         if (searchTerm.trim()) {
-            try {
-                const response = await axios.get(`http://localhost:8080/skill-search/${encodeURIComponent(searchTerm.trim())}`);
-                setSearchResults(response.data.data || []);
-            } catch (err) {
-                console.error('Failed to fetch search results', err);
-                setSearchResults([]);
-            }
+            const response = await fetchSearchResults(searchTerm.trim());
+            setSearchResults(response);
         }
     };
 
     const handleKeyPress = (e) => {
         if (e.key === 'Enter') {
-            fetchSearchResults();
+            querySearch();
         }
     };
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
-        fetchSearchResults();
+        querySearch();
     };
 
     /*
@@ -39,7 +35,6 @@ const Marketplace = () => {
         {user.email} - Skills: {user.skills.join(", ")}
     </div>
     */
-
 
     return (
         <div className="mx-[15%] mt-[20px]">
