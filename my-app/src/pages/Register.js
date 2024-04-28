@@ -113,6 +113,7 @@ function Register() {
               autoComplete="email"
               fullWidth
               value={emailInput}
+              placeholder="Enter email"
               onChange={handleInputChange}
               autoFocus
               sx={{ mb: 2 }}
@@ -125,6 +126,7 @@ function Register() {
               type="password"
               fullWidth
               value={passwordInput}
+              placeholder="Enter password"
               onChange={handleInputChange}
               sx={{ mb: 2 }}
             />
@@ -137,6 +139,7 @@ function Register() {
               type="password"
               fullWidth
               value={confirmPasswordInput}
+              placeholder="Confirm password"
               onChange={handleInputChange}
               sx={{ mb: 2 }}
             />
@@ -149,7 +152,7 @@ function Register() {
               variant="contained"
               disableElevation
             >
-              Login
+              Register
             </Button>
           </CardActions>
         </Card>
