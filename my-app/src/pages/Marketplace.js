@@ -19,22 +19,16 @@ const Marketplace = () => {
         }
     };
 
-    const handleKeyPress = (e) => {
-        if (e.key === 'Enter') {
-            querySearch();
-        }
-    };
+    // const handleKeyPress = (e) => {
+    //     if (e.key === 'Enter') {
+    //         querySearch();
+    //     }
+    // };
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);
         querySearch();
     };
-
-    /*
-    <div key={user._id} className="search-result-item">
-        {user.email} - Skills: {user.skills.join(", ")}
-    </div>
-    */
 
     return (
         <div className="mx-[15%] mt-[20px]">
@@ -53,13 +47,12 @@ const Marketplace = () => {
 
                         value={searchTerm}
                         onChange={handleSearchChange}
-                        onKeyPress={handleKeyPress}
                     />
                 </div>
                 <div className="w-[70%] px-4 rounded-lg">
-                    <div className="grid grid-cols-2 gap-4 w-full" data-cy="search-results">
-                        {searchResults.map((user) => (
-                            <div data-cy={user.email}>
+                    <div className="grid grid-cols-2 gap-4 w-full" data-cy="search-results" data-testid="search-results">
+                        {searchResults.map((user, id) => (
+                            <div data-cy={user.email} key={id}>
                                 <Box>
                                     <Card variant="outlined">
                                         <React.Fragment>

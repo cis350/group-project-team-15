@@ -49,7 +49,7 @@ function Register() {
   const handleSubmit = (event) => {
     event.preventDefault();
     // Add logic to handle login here
-    console.log('Register account', emailInput, passwordInput);
+    //console.log('Register account', emailInput, passwordInput);
 
     if (passwordInput !== confirmPasswordInput) {
       setErrorMessage("Error: passwords must match");

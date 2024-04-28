@@ -37,7 +37,6 @@ function Login() {
     console.log("Logging in with", emailInput, passwordInput);
 
     const res = login({ email: emailInput, password: passwordInput });
-    console.log("RES:", res);
     setErrorMessage(res);
   };
 

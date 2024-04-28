@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 // import "./Profile.css";
 import { useParams } from "react-router";
-import axios from "axios";
 
 import { useAuth } from "../auth/AuthContext";
 
@@ -10,10 +9,12 @@ import Divider from '@mui/material/Divider';
 import DisplayArray from "../components/DisplayArray";
 import EditSkills from "../components/EditSkills";
 
-
+import { getProfile, updateProfile } from "../api/profile";
 
 function Profile() {
   const { email } = useAuth();
+
+  console.log(email);
 
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
@@ -24,10 +25,11 @@ function Profile() {
   useEffect(() => {
     const fetchData = async (id) => {
       try {
-        const response = await axios.get(`http://localhost:8080/users/${id}`);
-        const data = response.data.data;
-        setUserData(data);
-        setIsOwner(email === data.email);
+        const { success, data } = await getProfile(id);
+        if (success) {
+          setUserData(data);
+          setIsOwner(email === data.email);
+        }
       } catch (err) {
         console.error(err);
       }
@@ -40,35 +42,24 @@ function Profile() {
     return <div>No user found!</div>;
   }
 
-  async function updateProfile(key, value) {
-    try {
-      const response = await axios.put(`http://localhost:8080/users/${id}`, {
-        id: id,
-        info: [
-          {
-            key: key,
-            value: value,
-          },
-        ],
-      });
-      console.log(response);
-      setErrorMessage("");
-    } catch (err) {
-      console.error(err);
-      setErrorMessage("There was an error updating the profile");
+  async function callUpdateAPI(key, value) {
+    const { success, errorMessage } = await updateProfile(id, key, value);
+    setErrorMessage(errorMessage);
+    if (success) {
+      console.log("Profile updated");
     }
   }
 
   function updateSkills(skills) {
     setUserData({ ...userData, skills: skills });
     // api call
-    updateProfile("skills", skills);
+    callUpdateAPI("skills", skills);
   }
 
   function updateLookingFor(skills) {
     setUserData({ ...userData, "looking for": skills });
     // api call
-    updateProfile("looking for", skills);
+    callUpdateAPI("looking for", skills);
   }
 
   function UserInformation() {
@@ -78,22 +69,24 @@ function Profile() {
         <Divider/>
         <div className="has-skills py-4">
           <span className="text-2xl"> Has skills: </span>
-          <DisplayArray skillArray={userData.skills} />
+          <DisplayArray skillArray={userData.skills} testID="has-skills"/>
           <EditSkills
               IsVisible={isOwner}
               skills={userData.skills}
               updateSkills={updateSkills}
+              testID="update-skills"
           />
           <div className="text-red-500">{errorMessage}</div>
         </div>
         <Divider/>
         <div className="looking-for py-4">
           <span className="text-2xl"> Looking for: </span>
-          <DisplayArray skillArray={userData["looking for"]} />
+          <DisplayArray skillArray={userData["looking for"]} testID="looking-for"/>
           <EditSkills
             IsVisible={isOwner}
             skills={userData["looking for"]}
             updateSkills={updateLookingFor}
+            testID="update-looking"
           />
         </div>
       </div>

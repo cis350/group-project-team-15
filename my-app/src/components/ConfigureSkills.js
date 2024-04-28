@@ -38,12 +38,14 @@ function ConfigureSkills(props) {
                     value={skill}
                     onChange={(e) => changeSkillName(id, e.target.value)}
                     className="w-20 bg-blue-200 ml-2"
+                    data-testid={props.testID + "-skill-" + id}
                 >
                 </input>
                 <IconButton
                     onClick={() => removeSkill(id)}
                     className="w-2 h-2 hover:text-white duration-100"
                     aria-label="delete"
+                    data-testid={"delete-" + id}
                 >
                     <CloseIcon
                         fontSize="small"
@@ -54,13 +56,14 @@ function ConfigureSkills(props) {
     }
 
     return (
-        <div className="p-2 w-64 ">
+        <div className="p-2 w-64">
             <div className="flex flex-wrap w-full space-x-2 p-2 outline-2 outline-gray-500 
                             outline py-2 my-2 rounded-lg overflow-y-scroll">
                 {skillArray.map((skill, id) => skillTag(skill, id))}
                 <button
                     className="w-10 h-10 m-1 bg-slate-100 rounded-3xl hover:bg-slate-300 duration-100"
                     onClick={() => addSkill("", skillArray.length)}
+                    data-testid={props.testID + "-add"}
                 >+</button>
             </div>
             {hasError && <div className="text-red-500">{errorMessage}</div>}
