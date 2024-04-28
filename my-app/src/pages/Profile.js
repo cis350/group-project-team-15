@@ -13,9 +13,6 @@ import { getProfile, updateProfile } from "../api/profile";
 
 function Profile() {
   const { email } = useAuth();
-
-  console.log(email);
-
   const { id } = useParams();
   const [userData, setUserData] = useState(null);
 
