@@ -1,4 +1,7 @@
-@tailwind base;
+@import url('https://fonts.googleapis.com/css?family=Roboto');
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+
+/* @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
@@ -14,4 +17,4 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
-}
+} */ 
