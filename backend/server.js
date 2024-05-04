@@ -5,6 +5,7 @@
 // import express
 const express = require("express");
 const bcrypt = require("bcrypt");
+const path = require('path');
 
 // import the cors -cross origin resource sharing- module
 const cors = require("cors");
@@ -30,6 +31,11 @@ const dbLib = require("./DbOperations");
 webapp.get("/", (req, resp) => {
   resp.json({ message: "hello CIS3500 friends!!! You have dreamy eyes" });
 });
+
+// Serve static files from the React frontend app
+webapp.use(express.static(path.join(__dirname, '../my-app/build')));
+
+
 
 /**
  * Login endpoint

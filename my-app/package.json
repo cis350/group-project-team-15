@@ -23,7 +23,7 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build && cd ../backend && npm run build",
+    "build": "react-scripts build",
     "test": "react-scripts test --coverage --watchAll",
     "eject": "react-scripts eject"
   },
