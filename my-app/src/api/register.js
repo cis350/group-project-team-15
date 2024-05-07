@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const registerAccount = async (emailInput, passwordInput) => {
     try {
-         await axios.post('https://group-project-team-15.vercel.app/register', {
+         await axios.post('https://group-project-team-15-git-deployment-attempt-2-group-15.vercel.app/register', {
             email: emailInput,
             password: passwordInput
         });

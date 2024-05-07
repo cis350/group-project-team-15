@@ -18,7 +18,7 @@ const { authenticateUser, verifyUser } = require("./utils/auth");
 // enable cors
 webapp.use(cors(
   {
-    origin: ["https://group-project-team-15.vercel.app"],
+    origin: ["https://group-project-team-15-git-deployment-attempt-2-group-15.vercel.app/"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     credentials: true,
   }
