@@ -3,7 +3,7 @@ import axios from 'axios';
 export const loginCall = async (email, password) => {
 
     try {
-        const response = await axios.post("http://localhost:8080/login", {
+        const response = await axios.post("https://group-project-team-15.vercel.app/login", {
             email: email,
             password: password
         });

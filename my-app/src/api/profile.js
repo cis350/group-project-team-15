@@ -19,7 +19,7 @@ export const getProfile = async (id) => {
 
 export const updateProfile = async (id, key, value) => {
     try {
-        const response = await axios.put(`http://localhost:8080/users/${id}`, {
+        const response = await axios.put(`https://group-project-team-15.vercel.app/users/${id}`, {
             id: id,
             info: [
                 {

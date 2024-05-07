@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export const registerAccount = async (emailInput, passwordInput) => {
     try {
-         await axios.post('http://localhost:8080/register', {
+         await axios.post('https://group-project-team-15.vercel.app/register', {
             email: emailInput,
             password: passwordInput
         });

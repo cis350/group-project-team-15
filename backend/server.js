@@ -16,7 +16,13 @@ const webapp = express();
 // import authentication functions
 const { authenticateUser, verifyUser } = require("./utils/auth");
 // enable cors
-webapp.use(cors());
+webapp.use(cors(
+  {
+    origin: ["https://group-project-team-15.vercel.app"],
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    credentials: true,
+  }
+));
 
 // Middleware to parse incoming JSON data
 webapp.use(express.json());
