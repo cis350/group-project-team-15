@@ -3,7 +3,7 @@ const config = require('../config.json');
 
 export const getProfile = async (id) => {
     try {
-        const response = await axios.get(`${config.serverURL}/users/${id}`);
+        const response = await axios.get(`https://skillshare-server-bay.vercel.app/users/${id}`);
         const data = response.data.data;
         return {
             success: true,

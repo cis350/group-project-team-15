@@ -4,7 +4,7 @@ const config = require('../config.json');
 
 export const loginCall = async (email, password) => {
     try {
-        const response = await axios.post(`${config.serverURL}/login`, {
+        const response = await axios.post(`https://skillshare-server-bay.vercel.app/login`, {
             email: email,
             password: password
         });

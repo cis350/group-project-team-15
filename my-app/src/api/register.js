@@ -3,7 +3,7 @@ const config = require('../config.json');
 
 export const registerAccount = async (emailInput, passwordInput) => {
     try {
-         await axios.post(`${config.serverURL}/register`, {
+         await axios.post(`https://skillshare-server-bay.vercel.app/register`, {
             email: emailInput,
             password: passwordInput
         });
