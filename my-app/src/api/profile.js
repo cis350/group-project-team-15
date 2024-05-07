@@ -1,8 +1,9 @@
 import axios from 'axios';
+const config = require('../config.json');
 
 export const getProfile = async (id) => {
     try {
-        const response = await axios.get(`http://localhost:8080/users/${id}`);
+        const response = await axios.get(`${config.serverURL}/users/${id}`);
         const data = response.data.data;
         return {
             success: true,
@@ -19,7 +20,7 @@ export const getProfile = async (id) => {
 
 export const updateProfile = async (id, key, value) => {
     try {
-        const response = await axios.put(`http://localhost:8080/users/${id}`, {
+        const response = await axios.put(`${config.serverURL}/users/${id}`, {
             id: id,
             info: [
                 {

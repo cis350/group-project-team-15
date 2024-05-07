@@ -1,8 +1,9 @@
 import axios from 'axios';
+const config = require('../config.json');
 
 export const registerAccount = async (emailInput, passwordInput) => {
     try {
-         await axios.post('http://localhost:8080/register', {
+         await axios.post(`${config.serverURL}/register`, {
             email: emailInput,
             password: passwordInput
         });
