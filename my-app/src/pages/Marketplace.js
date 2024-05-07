@@ -7,6 +7,7 @@ import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 
 import { fetchSearchResults } from '../api/marketplace';
+import SkillModal from '../components/SkillModal';
 
 const Marketplace = () => {
     const [searchTerm, setSearchTerm] = useState('');
@@ -32,6 +33,9 @@ const Marketplace = () => {
 
     return (
         <div className="mx-[15%] mt-[20px]">
+            {/* TODO: DELETE */}
+            <SkillModal />
+            {/* END TODO */}
             <div className="flex w-full gap-[10px]">
                 <div className="outline outline-slate-400 outline-1 w-[30%] p-4 rounded-lg">
                     <h1 className="text-2xl">Marketplace</h1>

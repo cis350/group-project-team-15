@@ -8,7 +8,13 @@ const theme = createTheme({
             '"Helvetica Neue"',
             'Arial',
             'sans-serif',
-        ].join(',')
+        ].join(','),
+        h6: {
+            fontWeight: 'bold'
+        },
+        body2: {
+            fontSize: '1.0rem'
+        }
     },
     palette: {
         primary: {
@@ -17,7 +23,7 @@ const theme = createTheme({
         secondary: {
             main: '#dc004e', // Change to your secondary color
         },
-    },
+    }
 });
 
 export default theme;

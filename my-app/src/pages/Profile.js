@@ -11,6 +11,8 @@ import EditSkills from "../components/EditSkills";
 
 import { getProfile, updateProfile } from "../api/profile";
 
+import SkillCard from "../components/SkillCard";
+
 function Profile() {
   const { email } = useAuth();
   const { id } = useParams();
@@ -63,22 +65,32 @@ function Profile() {
     return (
       <div className="px-4">
         <h1 className="py-4 mt-4 text-4xl">{userData.email}</h1>
-        <Divider/>
+        <Divider />
+        <SkillCard
+          skillObject={
+            {
+              name: "fishing",
+              description: "man i LOVEEE Fishing and i am hella good at it too",
+              price: 1000000,
+              tags: ["bait", "fish", "bass"]
+            }
+          }
+        />
         <div className="has-skills py-4">
           <span className="text-2xl"> Has skills: </span>
-          <DisplayArray skillArray={userData.skills} testID="has-skills"/>
+          <DisplayArray skillArray={userData.skills} testID="has-skills" />
           <EditSkills
-              IsVisible={isOwner}
-              skills={userData.skills}
-              updateSkills={updateSkills}
-              testID="update-skills"
+            IsVisible={isOwner}
+            skills={userData.skills}
+            updateSkills={updateSkills}
+            testID="update-skills"
           />
           <div className="text-red-500">{errorMessage}</div>
         </div>
-        <Divider/>
+        <Divider />
         <div className="looking-for py-4">
           <span className="text-2xl"> Looking for: </span>
-          <DisplayArray skillArray={userData["looking for"]} testID="looking-for"/>
+          <DisplayArray skillArray={userData["looking for"]} testID="looking-for" />
           <EditSkills
             IsVisible={isOwner}
             skills={userData["looking for"]}
