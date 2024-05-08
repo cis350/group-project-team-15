@@ -187,11 +187,39 @@ webapp.get("/users/:email", async (req, res) => {
 webapp.get("/skill-search/:skill", async (req, res) => {
   console.log(`search for users with skill: ${req.params.skill}`);
   try {
-    const results = await dbLib.searchUsersBySkill(req.params.skill);
+    const results = await dbLib.searchUsersBySkill(req.params.skill, (x) => true);
     res.status(200).json({ data: results });
   } catch (err) {
     res.status(500).json({ message: `encountered error: ${err}`});
   }
+});
+
+webapp.get("/skill-price-filter/:skill/:lowPrice/:highPrice"), async (req, res) => {
+    try {
+        const filter = (skill) => (
+            skill.highPrice >= req.params.lowPrice && skill.lowPrice <= req.params.highPrice
+        );
+        const results = await dbLib.searchUsersBySkill(req.params.skill, filter);
+        res.status(200).json({data: results});
+    } catch (err) {
+        res.status(500).json({message: `encountered error: ${err}`});
+    }
+});
+
+webapp.get("/skill-tag-filter/:skill/:tags"), async (req, res) => {
+    try {
+        const tags = req.params.tags.split('-');
+        const filter = (skill) => {
+            for(let tag of skill.tags)
+                if (tags.includes(tag))
+                    return true;
+            return false;
+        }
+        const results = await dbLib.searchUsersBySkill(req.params.skill, filter);
+        res.status(200).json({data: results});
+    } catch (err) {
+        res.status(500).json({message: `encountered error: ${err}`});
+    }
 });
 
 // /**
