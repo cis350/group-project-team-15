@@ -23,6 +23,18 @@ import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
 
 export default function SkillCard({ skillObject }) {
+    const centsToDollars = (cents) => {
+        const dollars = Math.floor(cents / 100);
+        const actualCents = cents % 100;
+        const centsStr = actualCents < 10 ? `0${actualCents}` : actualCents;
+        return `${dollars}.${centsStr}`;
+    };
+    const priceRangeToString = (low, high) => {
+        if (low === undefined && high === undefined) return "No price given";
+        if (low === undefined) return `Up to ${centsToDollars(high)}`;
+        if (high === undefined) return `${centsToDollars(low)}+`;
+        return `$${centsToDollars(low)} - $${centsToDollars(high)}`;
+    }
     return (
         <Box sx={{ minWidth: 275, maxWidth: 300 }}>
             <Card variant="outlined">
@@ -38,7 +50,7 @@ export default function SkillCard({ skillObject }) {
                             Price:
                         </Typography>
                         <Typography variant="body2">
-                            1000
+                            {priceRangeToString(skillObject.lowPrice, skillObject.highPrice)}
                         </Typography>
                     </div>
                     <Typography variant="body2" component="div">
