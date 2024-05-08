@@ -66,16 +66,6 @@ function Profile() {
       <div className="px-4">
         <h1 className="py-4 mt-4 text-4xl">{userData.email}</h1>
         <Divider />
-        <SkillCard
-          skillObject={
-            {
-              name: "fishing",
-              description: "man i LOVEEE Fishing and i am hella good at it too",
-              price: 1000000,
-              tags: ["bait", "fish", "bass"]
-            }
-          }
-        />
         <div className="has-skills py-4">
           <span className="text-2xl"> Has skills: </span>
           <DisplayArray skillArray={userData.skills} testID="has-skills" />
