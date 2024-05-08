@@ -29,6 +29,18 @@ import { Grid } from '@mui/material';
 
 
 export default function SkillCard({ index, skillObject, deleteSkill, edit }) {
+    const centsToDollars = (cents) => {
+        const dollars = Math.floor(cents / 100);
+        const actualCents = cents % 100;
+        const centsStr = actualCents < 10 ? `0${actualCents}` : actualCents;
+        return `${dollars}.${centsStr}`;
+    };
+    const priceRangeToString = (low, high) => {
+        if (low === undefined && high === undefined) return "No price given";
+        if (low === undefined) return `Up to ${centsToDollars(high)}`;
+        if (high === undefined) return `${centsToDollars(low)}+`;
+        return `$${centsToDollars(low)} - $${centsToDollars(high)}`;
+    }
 
     return (
         <Box >
