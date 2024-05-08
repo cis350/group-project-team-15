@@ -151,7 +151,7 @@ const updateUserByEmail = async (email, newInfo) => {
   }
 };
 
-const searchUsersBySkill = async (skill) => {
+const searchUsersBySkill = async (skill, filter) => {
   try {
     // get the db
     const db = await getDB();
@@ -165,9 +165,9 @@ const searchUsersBySkill = async (skill) => {
     const userMatch = (user, query) => {
       for(let skill of user.skills) {
         // the string type case is here until all skills are converted to objects
-        if (typeof skill === 'string' && skillStringMatch(skill, query))
+        if (typeof skill === 'string' && skillStringMatch(skill, query) && filter(skill))
           return true;
-        else if (skillObjectMatch(skill, query)) return true;
+        else if (skillObjectMatch(skill, query) && filter(skill)) return true;
       }
       return false;
     };
