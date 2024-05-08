@@ -194,7 +194,7 @@ webapp.get("/skill-search/:skill", async (req, res) => {
   }
 });
 
-webapp.get("/skill-price-filter/:skill/:lowPrice/:highPrice"), async (req, res) => {
+webapp.get("/skill-price-filter/:skill/:lowPrice/:highPrice", async (req, res) => {
     try {
         const filter = (skill) => (
             skill.highPrice >= req.params.lowPrice && skill.lowPrice <= req.params.highPrice
@@ -206,7 +206,7 @@ webapp.get("/skill-price-filter/:skill/:lowPrice/:highPrice"), async (req, res) 
     }
 });
 
-webapp.get("/skill-tag-filter/:skill/:tags"), async (req, res) => {
+webapp.get("/skill-tag-filter/:skill/:tags", async (req, res) => {
     try {
         const tags = req.params.tags.split('-');
         const filter = (skill) => {
