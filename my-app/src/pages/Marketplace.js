@@ -34,7 +34,7 @@ const Marketplace = () => {
     return (
         <div className="mx-[15%] mt-[20px]">
             {/* TODO: DELETE */}
-            <SkillModal />
+            
             {/* END TODO */}
             <div className="flex w-full gap-[10px]">
                 <div className="outline outline-slate-400 outline-1 w-[30%] p-4 rounded-lg">

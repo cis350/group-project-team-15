@@ -1,4 +1,6 @@
 import axios from 'axios';
+import  {serverUrl}  from './url';
+
 const config = require('../config.json');
 
 export const getProfile = async (id) => {
@@ -20,7 +22,8 @@ export const getProfile = async (id) => {
 
 export const updateProfile = async (id, key, value) => {
     try {
-        const response = await axios.put(`${config.serverURL}/users/${id}`, {
+        console.log("TRY" + `${serverUrl}/users/${id}`)
+        const response = await axios.put(`${serverUrl}/users/${id}`, {
             id: id,
             info: [
                 {

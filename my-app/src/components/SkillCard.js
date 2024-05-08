@@ -21,40 +21,65 @@ import Chip from '@mui/material/Chip';
 import TableRow from '@mui/material/TableRow';
 import TableCell from '@mui/material/TableCell';
 import TableContainer from '@mui/material/TableContainer';
+import { IconButton } from '@mui/material';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Avatar from '@mui/material/Avatar';
+import { Grid } from '@mui/material';
 
-export default function SkillCard({ skillObject }) {
+
+
+export default function SkillCard({ index, skillObject, deleteSkill, edit }) {
+
     return (
-        <Box sx={{ minWidth: 275, maxWidth: 300 }}>
+        <Box >
             <Card variant="outlined">
+
+
+
                 <CardContent>
-                    <Typography variant="h6" component="div" sx={{ mb: 0.5 }}>
-                        {skillObject.name}
-                    </Typography>
+                    <Grid container spacing={1} justifyContent='flex-start' alignItems="flex-start">
+                        <Grid item xs={10}>
+                            <Typography variant="h6" component="div" sx={{ mb: 0.5 }}>
+                                {skillObject.name}
+                            </Typography>
+                        </Grid>
+                        {edit && 
+                        <Grid item xs={1} alignContent='flex-end'>
+                            <IconButton color='error' size='small' onClick={() => { deleteSkill(index)}} aria-label="delete">
+                                <DeleteIcon />
+                            </IconButton>
+                        </Grid>
+}
+                    </Grid>
+
                     <Typography variant="body2" color="text.secondary" fontStyle="italic" sx={{ mb: 0.5 }}>
                         {skillObject.description}
                     </Typography>
                     <div className="flex justify-between w-full mt-2 mb-1.4">
-                        <Typography variant="body2" fontWeight="bold">
-                            Price:
-                        </Typography>
-                        <Typography variant="body2">
-                            1000
-                        </Typography>
+                        {skillObject.price && <>
+                            <Typography variant="body2" fontWeight="bold">
+                                Price
+                            </Typography>
+                            <Typography variant="body2">
+                                ${Number(skillObject.price).toFixed(2)}
+                            </Typography></>}
                     </div>
-                    <Typography variant="body2" component="div">
+
+                    {skillObject.tags && <><Typography variant="body2" fontWeight='bold' component="div">
                         Tags
                     </Typography>
-                    <div className="my-1.5 flex-row space-x-1">
-                        {skillObject.tags && skillObject.tags.map((skill, id) => {
-                            return (
-                                <Chip
-                                    label={skill}
-                                    color={'success'}
-                                    key={id}
-                                />
-                            );
-                        })}
-                    </div>
+                        <div className="my-1.5 flex-row space-x-1">
+                            {skillObject.tags && skillObject.tags.map((skill, id) => {
+                                return (
+                                    <Chip
+                                        label={skill}
+                                        color={'success'}
+                                        key={id}
+                                    />
+                                );
+                            })}
+                        </div>
+                    </>}
                 </CardContent>
             </Card>
         </Box >

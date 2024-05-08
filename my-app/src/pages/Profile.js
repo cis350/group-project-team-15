@@ -12,6 +12,8 @@ import EditSkills from "../components/EditSkills";
 import { getProfile, updateProfile } from "../api/profile";
 
 import SkillCard from "../components/SkillCard";
+import SkillModal from "../components/SkillModal";
+import { Button } from "@mui/material";
 
 function Profile() {
   const { email } = useAuth();
@@ -49,6 +51,19 @@ function Profile() {
     }
   }
 
+  function addSkill(skill) {
+    const updated = [...userData.skills, skill];
+    console.log('updating')
+    updateSkills(updated);
+  };
+    // api call
+   
+
+  function deleteSkill(id) {
+    const updated = userData.skills.filter((_, index) => index !== id);
+    updateSkills(updated);
+  }
+
   function updateSkills(skills) {
     setUserData({ ...userData, skills: skills });
     // api call
@@ -62,19 +77,33 @@ function Profile() {
   }
 
   function UserInformation() {
+    const [addModalOpen, setAddModalOpen] = useState(false);
+    const [editSkills, setEditSkills] = useState(false);
+
     return (
       <div className="px-4">
         <h1 className="py-4 mt-4 text-4xl">{userData.email}</h1>
         <Divider />
         <div className="has-skills py-4">
           <span className="text-2xl"> Has skills: </span>
-          <DisplayArray skillArray={userData.skills} testID="has-skills" />
+          <DisplayArray edit={editSkills} deleteSkill={deleteSkill} skillArray={userData.skills} testID="has-skills" />
           <EditSkills
             IsVisible={isOwner}
             skills={userData.skills}
             updateSkills={updateSkills}
             testID="update-skills"
           />
+          <Button onClick={() => {
+            setAddModalOpen(true);
+          }} variant='outlined'>Add</Button>
+          <Button onClick={() => {
+            setEditSkills(old => !old);
+          }} variant='outlined'>{editSkills ? 'Done' : 'Delete'}</Button>
+          <SkillModal
+            open={addModalOpen}
+            setOpen={setAddModalOpen}
+            update={addSkill}
+/>
           <div className="text-red-500">{errorMessage}</div>
         </div>
         <Divider />
