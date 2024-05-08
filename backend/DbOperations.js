@@ -156,10 +156,28 @@ const searchUsersBySkill = async (skill) => {
     // get the db
     const db = await getDB();
     const users = await db.collection("users");
+    // functions to check users to see if their skills contain the query string
+    const skillStringMatch = (skill, query) => skill.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+    const skillObjectMatch = (skill, query) => {
+      const skillStr = `${skill.name}, ${skill.description}, ${skill.tags}`;
+      return skillStringMatch(skillStr, query);
+    };
+    const userMatch = (user, query) => {
+      for(let skill of user.skills) {
+        // the string type case is here until all skills are converted to objects
+        if (typeof skill === 'string' && skillStringMatch(skill, query))
+          return true;
+        else if (skillObjectMatch(skill, query)) return true;
+      }
+      return false;
+    };
     // return array of all matching users
     // TODO: strip user objects of sensitive data like passwords
-    const query = { skills: { $elemMatch: { $regex: skill, $options: 'i' } } };
-    const result = await users.find(query).toArray();
+    const result = [];
+    const usersArray = await users.find().toArray();
+    usersArray.forEach((user) => {
+      if (userMatch(user, skill)) result.push(user);
+    });
     return result;
   } catch (err) {
     return console.log(`error: ${err.message}`);
