@@ -4,6 +4,19 @@ const { ObjectId } = require('mongodb');
 
 const DbConnection = require('./DbConnection');
 const app = require('./server');
+const { authenticateUser, verifyUser } = require('./utils/auth');
+const jwt = require("jsonwebtoken");
+
+const {
+  addUser,
+  getUserByEmail,
+  getUsers,
+  getUser,
+  updateUser,
+  updateUserByEmail,
+  searchUsersBySkill,
+  searchUsers,
+} = require("./DbOperations");
 
 let db;
 
@@ -259,6 +272,7 @@ describe('Skill editing', () => {
 
 describe('Skill searching', () => {
   it('Search for a skill', async () => {
+
     const resp = await request(app).get('/skill-search/drawing');
 
     const containsBbob = (arr) => {
@@ -273,4 +287,82 @@ describe('Skill searching', () => {
     expect(resp.type).toBe('application/json');
     expect(containsBbob(resp.body.data)).toBe(true);
   });
+});
+
+describe('Auth', () => {
+    it('generates a valid token for a user', async () => {
+        const token = authenticateUser('username');
+        expect(token).toBeDefined();
+        expect(typeof token).toBe('string');
+      });
+      it('verifies a valid token', async () => {
+        const token = authenticateUser('username');
+        const user = await verifyUser(token);
+        expect(user).toBeDefined();
+        expect(user.email).toBe('username');
+      });
+      it('returns false for an invalid token', async () => {
+        const invalidToken = 'invalid_token';
+        const user = await verifyUser(invalidToken);
+        expect(user).toBe(false);
+      });
+      it('returns false for a token with an invalid user', async () => {
+        const token = authenticateUser('nonexistent_user');
+        const user = await verifyUser(token);
+        expect(user).toBe(false);
+      });
+      it('handles errors in token generation', async () => {
+        // Mock the jwt.sign method to throw an error
+        jest.spyOn(jwt, 'sign').mockImplementationOnce(() => {
+          throw new Error('Token generation error');
+        });
+      
+        const token = authenticateUser('username');
+        expect(token).toBeUndefined();
+      });
+      it('handles errors in token verification', async () => {
+        // Mock the jwt.verify method to throw an error
+        jest.spyOn(jwt, 'verify').mockImplementationOnce(() => {
+          throw new Error('Token verification error');
+        });
+      
+        const token = authenticateUser('username');
+        const user = await verifyUser(token);
+        expect(user).toBe(false);
+      });
+});
+
+describe("User search", () => {
+    it('searches users by skill and returns matching users', async () => {
+        const skill = 'gaming';
+        const filter = (skill) => true;
+        const matchingUsers = await searchUsersBySkill(skill, filter);
+        expect(matchingUsers.length).toBeGreaterThan(0);
+        expect(matchingUsers[0]).toHaveProperty('email');
+        expect(matchingUsers[0]).toHaveProperty('skills');
+      });
+      it('retrieves a user by user ID', async () => {
+        // Create a sample user
+        const sampleUser = {
+          email: 'test@example.com',
+          password: 'password123',
+          skills: ['JavaScript', 'Node.js'],
+        };
+        const insertedUser = await db.collection('users').insertOne(sampleUser);
+        const userID = insertedUser.insertedId.toString();
+    
+        // Call the getUser function
+        const retrievedUser = await getUser(userID);
+    
+        // Assert the retrieved user matches the sample user
+        expect(retrievedUser).toMatchObject({
+          _id: insertedUser.insertedId,
+          email: sampleUser.email,
+          password: sampleUser.password,
+          skills: sampleUser.skills,
+        });
+    
+        // Clean up the inserted user
+        await db.collection('users').deleteOne({ _id: insertedUser.insertedId });
+      });
 });
