@@ -22,7 +22,15 @@ const marks = [
     }
 ];
 
-
+/**
+ * A React component that provides a user interface for filtering search results based on specific criteria like skill, price range, and tags.
+ * The component includes text fields, a slider for price range, and an autocomplete field for tags. Users can input their search
+ * criteria and submit them to filter skills. The results are then passed to the parent component through the setSearchResults callback.
+ *
+ * @param {Object} props - The properties passed to the component.
+ * @param {Function} props.setSearchResults - A callback function to update the search results in the parent component.
+ * @returns {JSX.Element} A form-like component allowing users to filter search results based on various criteria.
+ */
 export default function FilterBox({ setSearchResults }) {
     const [data, setData] = useState({
         name: '',

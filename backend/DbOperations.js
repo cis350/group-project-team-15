@@ -151,6 +151,12 @@ const updateUserByEmail = async (email, newInfo) => {
   }
 };
 
+/**
+ * Searches users based on a filter function applied to their skills.
+ * @async
+ * @param {Function} filter - A function that takes a skill and returns true if it matches the criteria.
+ * @returns {Promise<Array<{user: Object, skill: string}>>} A promise that resolves with an array of user objects and their matching skills.
+ */
 const searchUsers = async (filter) => {
   // filter should take a skill and return true if it's a match and false otherwise
   const userFilter = (user) => {

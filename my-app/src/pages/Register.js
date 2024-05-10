@@ -17,6 +17,16 @@ import {
 import { Close } from '@mui/icons-material'
 import Typography from '@mui/material/Typography';
 
+/**
+ * A registration form component for new users to create an account. It handles user input for email, password,
+ * and password confirmation. The component validates the password match and communicates with an API to register the user.
+ * Upon successful registration, it displays a success alert and redirects the user to the login page.
+ *
+ * Utilizes Material-UI components for the UI, such as TextFields for input, a Button for form submission, and an Alert
+ * for success notification. Uses Slide for transition effects on alerts.
+ *
+ * @returns {JSX.Element} A form that allows new users to register by providing their email, a password, and confirming the password.
+ */
 function Register() {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");

@@ -14,6 +14,17 @@ import Typography from '@mui/material/Typography';
 
 import { useAuth } from "../auth/AuthContext";
 
+/**
+ * A login form component that allows users to authenticate by entering their email and password. 
+ * If the user is already logged in, it redirects to the user's profile page. Otherwise, it displays a form
+ * for the user to enter their credentials. It uses the `useAuth` hook for authentication logic and `useNavigate`
+ * from react-router-dom for navigation.
+ *
+ * This component handles user inputs for email and password, validates these inputs, and submits them for authentication.
+ * If authentication is successful, the user is redirected to their profile page. If not, error messages are displayed.
+ *
+ * @returns {JSX.Element} The component returns either a redirect to the user's profile if already logged in or a login form for authentication.
+ */
 function Login() {
   const [emailInput, setEmailInput] = useState("");
   const [passwordInput, setPasswordInput] = useState("");

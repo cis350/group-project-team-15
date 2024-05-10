@@ -19,6 +19,14 @@ import { Divider } from '@mui/material';
 import { useAuth } from "../auth/AuthContext";
 import { useNavigate, Outlet } from "react-router-dom";
 
+/**
+ * Navigation bar component using Material-UI. Provides a responsive navigation drawer, and login/logout functionality.
+ * The navigation bar includes a toggleable drawer for navigation links, a title that also acts as a home link, and a login or logout button depending on the authentication state.
+ *
+ * Uses the `useAuth` hook to access the authentication state and `useNavigate` for routing.
+ *
+ * @returns {JSX.Element} A component that displays a navigation bar with a drawer and login/logout button.
+ */
 export function NavBar() {
 
   const { isLoggedIn, logout } = useAuth();

@@ -28,6 +28,19 @@ const style = {
   p: 4,
 };
 
+/**
+ * A modal component for adding or editing a skill. It provides form inputs for skill name, description, price, and tags.
+ * The modal supports validation for required fields and ensures the price is a positive number. It allows for dynamic tag selection from a predefined set.
+ * The modal can be closed or submitted, with submission triggering a custom update function passed as a prop.
+ *
+ * Props:
+ * - open: boolean - Controls the visibility of the modal.
+ * - setOpen: function - Function to update the open state of the modal.
+ * - update: function - Function to call when the form is submitted with valid data, passing the new or updated skill data.
+ *
+ * @param {object} props - The properties passed to the SkillModal component.
+ * @returns {JSX.Element} A modal dialog with a form for adding or editing a skill.
+ */
 const SkillModal = ({ open, setOpen, update }) => {
 
   const [data, setData] = useState({

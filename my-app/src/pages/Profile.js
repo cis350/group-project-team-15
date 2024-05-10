@@ -15,6 +15,20 @@ import SkillCard from "../components/SkillCard";
 import SkillModal from "../components/SkillModal";
 import { Button, Grid, Typography } from "@mui/material";
 
+/**
+ * A React component for displaying and managing a user's profile. It features functionality for viewing user information,
+ * skills, and provides interactive options such as adding new skills or deleting existing ones if the user is viewing their own profile.
+ * The component fetches user profile data using an API call and dynamically updates the user's skills through additional API interactions.
+ * 
+ * It employs several sub-components:
+ * - DisplayArray: to show a list of skills that can be interactively managed.
+ * - SkillModal: for adding new skills.
+ * - SkillCard: to represent individual skills.
+ * 
+ * Conditionally renders different UI elements based on the user's ownership of the profile and whether they are logged in.
+ *
+ * @returns {JSX.Element} The rendered user profile page with management options if the viewer owns the profile.
+ */
 function Profile() {
   const { email } = useAuth();
   const { id } = useParams();

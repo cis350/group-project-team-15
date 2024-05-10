@@ -27,7 +27,11 @@ webapp.use(express.urlencoded({ extended: true }));
 // import the db function
 const dbLib = require("./DbOperations");
 
-// root endpoint route
+/**
+ * Root GET endpoint that provides a welcome message.
+ * @param {Request} req - The HTTP request object.
+ * @param {Response} resp - The HTTP response object.
+ */
 webapp.get("/", (req, resp) => {
   resp.json({ message: "hello CIS3500 friends!!! You have dreamy eyes" });
 });
@@ -38,8 +42,9 @@ webapp.use(express.static(path.join(__dirname, '../my-app/build')));
 
 
 /**
- * Login endpoint
- * The name is used to log in
+ * POST endpoint for user login. Validates user credentials and returns an authentication token.
+ * @param {Request} req - The HTTP request object containing email and password in the body.
+ * @param {Response} res - The HTTP response object.
  */
 webapp.post("/login", async (req, res) => {
   // check that the name was sent in the body
@@ -85,8 +90,9 @@ webapp.post("/login", async (req, res) => {
 });
 
 /**
- * Route implementation POST /register
- * to register new user
+ * POST endpoint to register a new user. Validates input and creates a new user if valid.
+ * @param {Request} req - The HTTP request object containing user details.
+ * @param {Response} resp - The HTTP response object.
  */
 webapp.post("/register", async (req, resp) => {
   if (!req.body.email || !req.body.password) {
@@ -126,7 +132,9 @@ webapp.post("/register", async (req, resp) => {
 });
 
 /**
- * route implementation POST /verify
+ * POST endpoint to verify user authentication tokens.
+ * @param {Request} req - The HTTP request object containing the authentication token.
+ * @param {Response} res - The HTTP response object.
  */
 webapp.post("/verify", async (req, res) => {
   // check that the token was sent in the body
@@ -151,7 +159,9 @@ webapp.post("/verify", async (req, res) => {
 });
 
 /**
- * route implementation GET /students
+ * GET endpoint to retrieve all users.
+ * @param {Request} req - The HTTP request object.
+ * @param {Response} resp - The HTTP response object.
  */
 webapp.get("/users", async (req, resp) => {
   try {
@@ -166,7 +176,9 @@ webapp.get("/users", async (req, resp) => {
 });
 
 /**
- * route implementation GET /users/:email
+ * GET endpoint to retrieve user details by email.
+ * @param {Request} req - The HTTP request object containing user's email as a URL parameter.
+ * @param {Response} res - The HTTP response object.
  */
 webapp.get("/users/:email", async (req, res) => {
   console.log(`find user with id: ${req.params.email}`);
@@ -184,6 +196,11 @@ webapp.get("/users/:email", async (req, res) => {
   }
 });
 
+/**
+ * POST endpoint to search for users based on various parameters.
+ * @param {Request} req - The HTTP request object containing search parameters in the body.
+ * @param {Response} res - The HTTP response object.
+ */
 webapp.post("/search/", async (req, res) => {
   try {
     // get search parameters
@@ -260,7 +277,9 @@ webapp.post("/search/", async (req, res) => {
 // });
 
 /**
- * route implementation PUT /student/:email
+ * PUT endpoint to update user details by email.
+ * @param {Request} req - The HTTP request object containing user's email as a URL parameter and update information in the body.
+ * @param {Response} res - The HTTP response object.
  */
 webapp.put("/users/:email", async (req, res) => {
   console.log(`UPDATE a student with`);

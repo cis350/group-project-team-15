@@ -14,6 +14,16 @@ import FilterBox from '../components/FilterBox';
 
 import Masonry from '@mui/lab/Masonry';
 
+/**
+ * The Marketplace component that serves as a platform for users to browse and filter skills available for trade or purchase.
+ * It incorporates a filter sidebar using the FilterBox component to specify search criteria and displays search results
+ * in a masonry grid layout of SkillCards, each representing a skill available in the marketplace.
+ *
+ * The component maintains the state of search results which updates dynamically based on the filters applied through the FilterBox.
+ * Each SkillCard displays detailed information about a skill and provides a link to the provider's profile.
+ *
+ * @returns {JSX.Element} A layout with a filterable listing of skills, presenting each skill in a visually appealing masonry grid format.
+ */
 const Marketplace = () => {
     const [searchResults, setSearchResults] = useState([]);
 
