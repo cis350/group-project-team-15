@@ -18,10 +18,18 @@ jobs:
       with:
         node-version: 18
 
-    - name: Install
+    - name: Install Backend
       working-directory: ./backend
       run: npm install
 
-    - name: Test
+    - name: Test Backend
       working-directory: ./backend
+      run: npm test
+
+    - name: Install Frontent
+      working-directory: ./my-app
+      run: npm install
+
+    - name: Test Frontent
+      working-directory: ./my-app
       run: npm test
