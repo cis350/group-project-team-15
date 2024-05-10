@@ -1,0 +1,31 @@
+name: Backend CI/CD
+
+on:
+  push:
+    branches: [ '**' ]
+    paths:
+      - 'backend/**'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'backend/**'
+
+jobs:
+  backend_test:
+  
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Use Node.js 18
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install
+      working-directory: ./backend
+      run: npm install
+
+    - name: Test
+      working-directory: ./backend
+      run: npm test
