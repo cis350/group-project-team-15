@@ -25,11 +25,3 @@ jobs:
     - name: Test Backend
       working-directory: ./backend
       run: npm test
-
-    - name: Install Frontent
-      working-directory: ./my-app
-      run: npm install
-
-    - name: Test Frontent
-      working-directory: ./my-app
-      run: npm test
