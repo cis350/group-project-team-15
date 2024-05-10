@@ -1,5 +1,5 @@
 import axios from 'axios';
-import  {serverUrl}  from './url';
+// import  {serverUrl}  from './url';
 
 const config = require('../config.json');
 const rootURL = config.SERVER_URL;
@@ -23,8 +23,8 @@ export const getProfile = async (id) => {
 
 export const updateProfile = async (id, key, value) => {
     try {
-        console.log("TRY" + `${serverUrl}/users/${id}`)
-        const response = await axios.put(`${serverUrl}/users/${id}`, {
+        console.log("TRY" + `${rootURL}/users/${id}`)
+        const response = await axios.put(`${rootURL}/users/${id}`, {
             id: id,
             info: [
                 {
