@@ -1,4 +1,4 @@
-const local = true
+const local = false
 
 const serverUrl = local ? "http://localhost:8080" : "https://skillshare-server-bay.vercel.app";
 
