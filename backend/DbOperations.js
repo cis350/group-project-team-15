@@ -22,7 +22,7 @@ const getUsers = async () => {
     const db = await getDB();
     const result = await db.collection("users").find({}).toArray();
     // print the results
-    console.log(`users: ${JSON.stringify(result)}`);
+    // console.log(`users: ${JSON.stringify(result)}`);
     return result;
   } catch (err) {
     return console.log(`error: ${err.message}`);
@@ -73,7 +73,7 @@ const getUser = async (userID) => {
       .collection("users")
       .findOne({ _id: new ObjectId(userID) });
     // print the result
-    console.log(`user: ${JSON.stringify(result)}`);
+    // console.log(`user: ${JSON.stringify(result)}`);
     return result;
   } catch (err) {
     return console.log(`error: ${err.message}`);
@@ -108,13 +108,13 @@ const getUserByEmail = async (email) => {
  * @returns
  */
 const updateUser = async (userID, newInfo) => {
-  console.log(newInfo);
+  // console.log(newInfo);
   const updateObj = {};
   newInfo.forEach((kv) => {
-    console.log(kv);
+    // console.log(kv);
     updateObj[kv.key] = kv.value;
   });
-  console.log(`new obj: ${updateObj}`);
+  // console.log(`new obj: ${updateObj}`);
   try {
     // get the db
     const db = await getDB();
@@ -151,42 +151,8 @@ const updateUserByEmail = async (email, newInfo) => {
   }
 };
 
-const searchUsersBySkill = async (skill, filter) => {
-  try {
-    // get the db
-    const db = await getDB();
-    const users = await db.collection("users");
-    // functions to check users to see if their skills contain the query string
-    const skillStringMatch = (skill, query) => skill.toLowerCase().indexOf(query.toLowerCase()) !== -1;
-    const skillObjectMatch = (skill, query) => {
-      const skillStr = `${skill.name}, ${skill.description}, ${skill.tags}`;
-      return skillStringMatch(skillStr, query);
-    };
-    const userMatch = (user, query) => {
-      for(let skill of user.skills) {
-        // the string type case is here until all skills are converted to objects
-        if (typeof skill === 'string' && skillStringMatch(skill, query) && filter(skill))
-          return true;
-        else if (skillObjectMatch(skill, query) && filter(skill)) return true;
-      }
-      return false;
-    };
-    // return array of all matching users
-    // TODO: strip user objects of sensitive data like passwords
-    const result = [];
-    const usersArray = await users.find().toArray();
-    usersArray.forEach((user) => {
-      if (userMatch(user, skill)) result.push(user);
-    });
-    return result;
-  } catch (err) {
-    return console.log(`error: ${err.message}`);
-  }
-};
-
 const searchUsers = async (filter) => {
   // filter should take a skill and return true if it's a match and false otherwise
-  const skillStr = (skill) => typeof skill === 'string' ? skill : `${skill.name}; ${skill.description}; ${skill.lowPrice}-${skill.highPrice}; ${skill.tags}`;
   const userFilter = (user) => {
     for (let skill of user.skills) {
       if (filter(skill)) {
@@ -243,7 +209,6 @@ module.exports = {
   getUser,
   updateUser,
   updateUserByEmail,
-  searchUsersBySkill,
   searchUsers,
   // deleteUser,
 };

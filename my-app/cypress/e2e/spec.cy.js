@@ -12,13 +12,13 @@ describe('Login', () => {
       cy.get('input[name="email"]').type('bbob');
       cy.get('input[name="password"]').type('wrong');
       cy.get('button[type="submit"]').click();
-      cy.get('p').should('have.text', 'Loginauthentication failed (incorrect password)');
+      cy.get('p').should('have.text', 'LoginError: authentication failed (incorrect password)');
   });
 
   it('should fail to login with empty fields', () => {
       cy.visit('http://localhost:3000/login');
       cy.get('button[type="submit"]').click();
-      cy.get('p').should('have.text', 'Loginempty or missing email and password');
+      cy.get('p').should('have.text', 'LoginError: empty or missing email and password');
   });
 
   it('should fail to login with non-existent email', () => {

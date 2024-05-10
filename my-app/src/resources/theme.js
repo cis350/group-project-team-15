@@ -9,6 +9,10 @@ const theme = createTheme({
             'Arial',
             'sans-serif',
         ].join(','),
+        h4: {
+            fontSize: '1.5rem',
+            fontWeight: 'bold'
+        },
         h6: {
             fontWeight: 'bold'
         },

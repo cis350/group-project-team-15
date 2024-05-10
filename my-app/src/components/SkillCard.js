@@ -29,21 +29,8 @@ import { Grid } from '@mui/material';
 
 
 export default function SkillCard({ index, skillObject, deleteSkill, edit }) {
-    const centsToDollars = (cents) => {
-        const dollars = Math.floor(cents / 100);
-        const actualCents = cents % 100;
-        const centsStr = actualCents < 10 ? `0${actualCents}` : actualCents;
-        return `${dollars}.${centsStr}`;
-    };
-    const priceRangeToString = (low, high) => {
-        if (low === undefined && high === undefined) return "No price given";
-        if (low === undefined) return `Up to ${centsToDollars(high)}`;
-        if (high === undefined) return `${centsToDollars(low)}+`;
-        return `$${centsToDollars(low)} - $${centsToDollars(high)}`;
-    }
-
     return (
-        <Box >
+        <Box data-testid={index + '-skill'}>
             <Card variant="outlined">
 
 
@@ -67,15 +54,15 @@ export default function SkillCard({ index, skillObject, deleteSkill, edit }) {
                     <Typography variant="body2" color="text.secondary" fontStyle="italic" sx={{ mb: 0.5 }}>
                         {skillObject.description}
                     </Typography>
-                    <div className="flex justify-between w-full mt-2 mb-1.4">
-                        {skillObject.price && <>
+                    
+                        {!!skillObject.price  && <div className="flex justify-between w-full mt-2 mb-1.4">
                             <Typography variant="body2" fontWeight="bold">
                                 Price
                             </Typography>
                             <Typography variant="body2">
                                 ${Number(skillObject.price).toFixed(2)}
-                            </Typography></>}
-                    </div>
+                            </Typography></div>}
+                    
 
                     {skillObject.tags && <><Typography variant="body2" fontWeight='bold' component="div">
                         Tags

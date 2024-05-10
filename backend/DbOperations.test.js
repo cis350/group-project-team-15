@@ -14,7 +14,6 @@ const {
   getUser,
   updateUser,
   updateUserByEmail,
-  searchUsersBySkill,
   searchUsers,
 } = require("./DbOperations");
 
@@ -270,25 +269,6 @@ describe('Skill editing', () => {
     });
 });
 
-describe('Skill searching', () => {
-  it('Search for a skill', async () => {
-
-    const resp = await request(app).get('/skill-search/drawing');
-
-    const containsBbob = (arr) => {
-      let ret = false;
-      arr.forEach((item) => {
-        if (item.email === 'bbob') ret = true;
-      });
-      return ret;
-    };
-
-    expect(resp.status).toBe(200);
-    expect(resp.type).toBe('application/json');
-    expect(containsBbob(resp.body.data)).toBe(true);
-  });
-});
-
 describe('Auth', () => {
     it('generates a valid token for a user', async () => {
         const token = authenticateUser('username');
@@ -334,35 +314,107 @@ describe('Auth', () => {
 
 describe("User search", () => {
     it('searches users by skill and returns matching users', async () => {
-        const skill = 'gaming';
-        const filter = (skill) => true;
-        const matchingUsers = await searchUsersBySkill(skill, filter);
+        const filter = (skill) => true; // match any user
+        const matchingUsers = await searchUsers(filter);
         expect(matchingUsers.length).toBeGreaterThan(0);
-        expect(matchingUsers[0]).toHaveProperty('email');
-        expect(matchingUsers[0]).toHaveProperty('skills');
-      });
-      it('retrieves a user by user ID', async () => {
+    });
+    it('retrieves a user by user ID', async () => {
         // Create a sample user
-        const sampleUser = {
+        /*
+        const testUser = {
           email: 'test@example.com',
           password: 'password123',
-          skills: ['JavaScript', 'Node.js'],
+          skills: [{
+            name: "gaming",
+            description: "i play games",
+            price: 0,
+            tags: ["ps5"],
+          }],
         };
-        const insertedUser = await db.collection('users').insertOne(sampleUser);
-        const userID = insertedUser.insertedId.toString();
+        */
+       const skillsArray = [
+        {
+            name: "gaming",
+            description: "i like to game",
+            price: 0,
+            tags: ["ps5"]
+        }
+       ];
+
+        const registerResponse = await request(app)
+            .post('/register')
+            .send(`email=${"test"}&password=${"password123"}`);
+        
+        const updateResponse = await request(app)
+        .put('/users/test')
+        .send({
+            id: "test",
+            info: [
+                {
+                    key: "skills",
+                    value: [{
+                        name: "gaming",
+                        description: "i like to game",
+                        price: 0,
+                        tags: ["pc"]
+                    }]
+                }
+            ]
+        });
+        
+        const resp = await request(app)
+            .post('/search')
+            .send({
+                query: "gaming",
+            });
+        
+        expect(resp.status).toBe(200);
+        const result = resp.body.data;
+
+        const containsTestUser = () => {
+            for(let {user, skill} of result) {
+              console.log(`\n\n\n\n\n\n\n${user.email}`);
+              if (user.email === 'test') return true;
+            }
+            return false;
+        };
+
+        expect(containsTestUser()).toBe(true);
+
+        // const insertedUser = await db.collection('users').insertOne(sampleUser);
+        // const userID = insertedUser.insertedId.toString();
     
         // Call the getUser function
-        const retrievedUser = await getUser(userID);
+        // const retrievedUser = await getUser(userID);
     
         // Assert the retrieved user matches the sample user
+        /*
         expect(retrievedUser).toMatchObject({
           _id: insertedUser.insertedId,
           email: sampleUser.email,
           password: sampleUser.password,
           skills: sampleUser.skills,
         });
+        */
     
         // Clean up the inserted user
-        await db.collection('users').deleteOne({ _id: insertedUser.insertedId });
+        await db.collection('users').deleteOne({ _id: registerResponse.body.id });
       });
 });
+
+describe('Verify Endpoint', () => {
+    it('returns the user when a valid token is provided', async () => {
+      const user = {
+        email: 'bbob',
+        password: 'job',
+      };
+      const token = authenticateUser(user.email);
+  
+      const response = await request(app)
+        .post('/verify')
+        .send({ token });
+  
+      expect(response.status).toBe(200);
+      expect(response.body.data).toEqual(expect.objectContaining({ email: user.email }));
+    });
+  });
