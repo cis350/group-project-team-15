@@ -87,12 +87,14 @@ function Profile() {
         <div className="has-skills py-4">
           <span className="text-2xl"> Has skills: </span>
           <DisplayArray edit={editSkills} deleteSkill={deleteSkill} skillArray={userData.skills} testID="has-skills" />
+          {/*
           <EditSkills
             IsVisible={isOwner}
             skills={userData.skills}
             updateSkills={updateSkills}
             testID="update-skills"
           />
+          */}
           <Button onClick={() => {
             setAddModalOpen(true);
           }} variant='outlined'>Add</Button>

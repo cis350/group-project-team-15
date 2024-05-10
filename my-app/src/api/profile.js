@@ -2,10 +2,11 @@ import axios from 'axios';
 import  {serverUrl}  from './url';
 
 const config = require('../config.json');
+const rootURL = config.SERVER_URL;
 
 export const getProfile = async (id) => {
     try {
-        const response = await axios.get(`https://skillshare-server-bay.vercel.app/users/${id}`);
+        const response = await axios.get(`${rootURL}/users/${id}`);
         const data = response.data.data;
         return {
             success: true,

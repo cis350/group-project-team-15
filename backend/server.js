@@ -184,10 +184,40 @@ webapp.get("/users/:email", async (req, res) => {
   }
 });
 
-webapp.get("/skill-search/:skill", async (req, res) => {
-  console.log(`search for users with skill: ${req.params.skill}`);
+webapp.post("/search/", async (req, res) => {
   try {
-    const results = await dbLib.searchUsersBySkill(req.params.skill, (x) => true);
+    const query = req.body.query;
+    const lowPrice = req.body.lowPrice;
+    const highPrice = req.body.highPrice;
+    const tags = req.body.tags;
+    console.log(`searching with query: ${query} and price ${lowPrice}-${highPrice} with tags ${tags}`);
+    const queryFilter = (skill) => {
+      if (query === undefined) return true;
+      const skillStringMatch = (skill, query) => skill.toLowerCase().indexOf(query.toLowerCase()) !== -1;
+      const skillObjectMatch = (skill, query) => {
+        const skillStr = `${skill.name}, ${skill.description}, ${skill.tags}`;
+        return skillStringMatch(skillStr, query);
+      };
+      if (typeof skill === 'string') return skillStringMatch(skill, query);
+      return skillObjectMatch(skill, query);
+    };
+    const priceFilter = (skill) => {
+      if (lowPrice === undefined && highPrice === undefined) return true;
+      if (typeof skill === 'string') return false;
+      if (lowPrice && skill.highPrice >= lowPrice) return true;
+      if (highPrice && skill.lowPrice <= highPrice) return true;
+      return false;
+    };
+    const tagFilter = (skill) => {
+      if (tags === undefined) return true;
+      if (typeof skill === 'string') return false;
+      const skillTags = skill.tags.map((tag) => tag.toLowerCase());
+      for(let tag of skill.tags)
+        if (skillTags.includes(tag.toLowerCase())) return true;
+      return false;
+    };
+    const filter = (skill) => queryFilter(skill) && priceFilter(skill) && tagFilter(skill);
+    const results = await dbLib.searchUsers(filter);
     res.status(200).json({ data: results });
   } catch (err) {
     res.status(500).json({ message: `encountered error: ${err}`});
@@ -208,10 +238,10 @@ webapp.get("/skill-price-filter/:skill/:lowPrice/:highPrice", async (req, res) =
 
 webapp.get("/skill-tag-filter/:skill/:tags", async (req, res) => {
     try {
-        const tags = req.params.tags.split('-');
+        const tags = req.params.tags.toLowerCase().split('-');
         const filter = (skill) => {
             for(let tag of skill.tags)
-                if (tags.includes(tag))
+                if (tags.includes(tag.toLowerCase()))
                     return true;
             return false;
         }

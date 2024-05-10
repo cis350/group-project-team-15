@@ -184,6 +184,35 @@ const searchUsersBySkill = async (skill, filter) => {
   }
 };
 
+const searchUsers = async (filter) => {
+  // filter should take a skill and return true if it's a match and false otherwise
+  const skillStr = (skill) => typeof skill === 'string' ? skill : `${skill.name}; ${skill.description}; ${skill.lowPrice}-${skill.highPrice}; ${skill.tags}`;
+  const userFilter = (user) => {
+    for (let skill of user.skills) {
+      if (filter(skill)) {
+        return {filterRes: true, skill};
+      }
+    }
+    return {filterRes: false, skill: null};
+  };
+  try {
+    // get the db
+    const db = await getDB();
+    const users = await db.collection("users");
+    // return array of user,skill pairs for all matching users
+    // TODO: strip user objects of sensitive data like passwords
+    const result = [];
+    const usersArray = await users.find().toArray();
+    usersArray.forEach((user) => {
+      const {filterRes, skill} = userFilter(user);
+      if (filterRes) result.push({user, skill});
+    });
+    return result;
+  } catch (err) {
+    return console.log(`error: ${err.message}`);
+  }
+};
+
 // /**
 //  * DELETE a user (DELETE /user/:id)
 //  * https://app.swaggerhub.com/apis/ericfouh/usersRoster_App/1.0.0#/users/deleteuser
@@ -214,6 +243,7 @@ module.exports = {
   getUser,
   updateUser,
   updateUserByEmail,
-  searchUsersBySkill
+  searchUsersBySkill,
+  searchUsers,
   // deleteUser,
 };

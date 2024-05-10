@@ -60,17 +60,20 @@ const SkillModal = ({ open, setOpen, update }) => {
                 <form onSubmit={(e) => {
                     e.preventDefault();
                     // console.log(Object.values(errors)) 
-                    if (!Object.values(errors).some(v => !!v)) {
+                    const numPrice = parseFloat(data.price);
+                    if (!Object.values(errors).some(v => !!v) && numPrice >= 0) {
+                        data.price = numPrice;
                         update(data);
                         setOpen(false);
                         // updateProfile(email, field, 
                         //     Object.fromEntries(Object.entries(data).filter(([key, value]) => value))
                         // ).catch((err) => console.error(err));
-                    // console.log('submit')
-                    console.log( )
-                }else {
-                    setBlurred({name: true, description: true})
-                }}}>
+                        // console.log('submit')
+                        console.log( )
+                    } else {
+                        setBlurred({name: true, description: true})
+                    }}
+                }>
                     <Grid container spacing={2} >
                         <Grid item xs={12}>
                             <TextField
@@ -157,13 +160,13 @@ const SkillModal = ({ open, setOpen, update }) => {
 }
 
 const tagPresets = [
-    'hi',
-    'bye',
-    'lol',
-    'anthony',
-    'hey',
-    'go',
-    'find'
+    'creative',
+    'math',
+    'science',
+    'history',
+    'english',
+    'programming',
+    'art',
 ]
 
 export default SkillModal;

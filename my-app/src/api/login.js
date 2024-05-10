@@ -1,10 +1,12 @@
 import axios from 'axios';
 
 const config = require('../config.json');
+const rootURL = config.SERVER_URL;
 
 export const loginCall = async (email, password) => {
     try {
-        const response = await axios.post(`https://skillshare-server-bay.vercel.app/login`, {
+        
+        const response = await axios.post(`${rootURL}/login`, {
             email: email,
             password: password
         });
