@@ -23,30 +23,30 @@
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">18.75% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>3/16</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">16.66% </span>
+                <span class="strong">87.5% </span>
                 <span class="quiet">Branches</span>
-                <span class='fraction'>3/18</span>
+                <span class='fraction'>7/8</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">20% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Functions</span>
-                <span class='fraction'>1/5</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">23.07% </span>
+                <span class="strong">66.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>3/13</span>
+                <span class='fraction'>2/3</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line low'></div>
+    <div class='status-line medium'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -148,21 +148,7 @@
 <a name='L83'></a><a href='#L83'>83</a>
 <a name='L84'></a><a href='#L84'>84</a>
 <a name='L85'></a><a href='#L85'>85</a>
-<a name='L86'></a><a href='#L86'>86</a>
-<a name='L87'></a><a href='#L87'>87</a>
-<a name='L88'></a><a href='#L88'>88</a>
-<a name='L89'></a><a href='#L89'>89</a>
-<a name='L90'></a><a href='#L90'>90</a>
-<a name='L91'></a><a href='#L91'>91</a>
-<a name='L92'></a><a href='#L92'>92</a>
-<a name='L93'></a><a href='#L93'>93</a>
-<a name='L94'></a><a href='#L94'>94</a>
-<a name='L95'></a><a href='#L95'>95</a>
-<a name='L96'></a><a href='#L96'>96</a>
-<a name='L97'></a><a href='#L97'>97</a>
-<a name='L98'></a><a href='#L98'>98</a>
-<a name='L99'></a><a href='#L99'>99</a>
-<a name='L100'></a><a href='#L100'>100</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<a name='L86'></a><a href='#L86'>86</a></td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -193,20 +179,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">7x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -246,8 +219,7 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -292,21 +264,8 @@ import { Grid } from '@mui/material';
 &nbsp;
 &nbsp;
 export default function SkillCard({ index, skillObject, deleteSkill, edit }) {
-    const centsToDollars = <span class="fstat-no" title="function not covered" >(c</span>ents) =&gt; {
-        const dollars = <span class="cstat-no" title="statement not covered" >Math.floor(cents / 100);</span>
-        const actualCents = <span class="cstat-no" title="statement not covered" >cents % 100;</span>
-        const centsStr = <span class="cstat-no" title="statement not covered" >actualCents &lt; 10 ? `0${actualCents}` : actualCents;</span>
-<span class="cstat-no" title="statement not covered" >        return `${dollars}.${centsStr}`;</span>
-    };
-    const priceRangeToString = <span class="fstat-no" title="function not covered" >(l</span>ow, high) =&gt; {
-<span class="cstat-no" title="statement not covered" >        if (low === undefined &amp;&amp; high === undefined) <span class="cstat-no" title="statement not covered" >return "No price given";</span></span>
-<span class="cstat-no" title="statement not covered" >        if (low === undefined) <span class="cstat-no" title="statement not covered" >return `Up to ${centsToDollars(high)}`;</span></span>
-<span class="cstat-no" title="statement not covered" >        if (high === undefined) <span class="cstat-no" title="statement not covered" >return `${centsToDollars(low)}+`;</span></span>
-<span class="cstat-no" title="statement not covered" >        return `$${centsToDollars(low)} - $${centsToDollars(high)}`;</span>
-    }
-&nbsp;
     return (
-        &lt;Box &gt;
+        &lt;Box data-testid={index + '-skill'}&gt;
             &lt;Card variant="outlined"&gt;
 &nbsp;
 &nbsp;
@@ -330,22 +289,22 @@ export default function SkillCard({ index, skillObject, deleteSkill, edit }) {
                     &lt;Typography variant="body2" color="text.secondary" fontStyle="italic" sx={{ mb: 0.5 }}&gt;
                         {skillObject.description}
                     &lt;/Typography&gt;
-                    &lt;div className="flex justify-between w-full mt-2 mb-1.4"&gt;
-                        {skillObject.price &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;&gt;</span>
+                    
+                        {!!skillObject.price  &amp;&amp; &lt;div className="flex justify-between w-full mt-2 mb-1.4"&gt;
                             &lt;Typography variant="body2" fontWeight="bold"&gt;
                                 Price
                             &lt;/Typography&gt;
                             &lt;Typography variant="body2"&gt;
                                 ${Number(skillObject.price).toFixed(2)}
-                            &lt;/Typography&gt;&lt;/&gt;}
-                    &lt;/div&gt;
+                            &lt;/Typography&gt;&lt;/div&gt;}
+                    
 &nbsp;
-                    {skillObject.tags &amp;&amp; <span class="branch-1 cbranch-no" title="branch not covered" >&lt;&gt;&lt;Typography variant="body2" fontWeight='bold' component="div"&gt;</span>
+                    {skillObject.tags &amp;&amp; &lt;&gt;&lt;Typography variant="body2" fontWeight='bold' component="div"&gt;
                         Tags
                     &lt;/Typography&gt;
                         &lt;div className="my-1.5 flex-row space-x-1"&gt;
-                            {skillObject.tags &amp;&amp; skillObject.tags.map(<span class="fstat-no" title="function not covered" >(s</span>kill, id) =&gt; {
-<span class="cstat-no" title="statement not covered" >                                return (</span>
+                            {skillObject.tags &amp;&amp; skillObject.tags.map((skill, id) =&gt; {
+                                return (
                                     &lt;Chip
                                         label={skill}
                                         color={'success'}
@@ -359,15 +318,14 @@ export default function SkillCard({ index, skillObject, deleteSkill, edit }) {
             &lt;/Card&gt;
         &lt;/Box &gt;
     );
-}
-&nbsp;</pre></td></tr></table></pre>
+}</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank" rel="noopener noreferrer">istanbul</a>
-                at 2024-05-10T03:59:01.909Z
+                at 2024-05-10T07:25:50.360Z
             </div>
         <script src="../../prettify.js"></script>
         <script>

@@ -47,7 +47,14 @@ export default function FilterBox({ setSearchResults }) {
             high_price: (value[1] === 100 ? undefined : value[1])
         }
 
+        console.log(query);
         const response = await skillSearch(query.name, query.low_price, query.high_price, query.tags);
+        console.log(response);
+
+        if (!response || !response.data) {
+            setSearchResults([]);
+            return;
+        }
 
         const results = response.data.map((info) => {
             const skill = info.skill;
@@ -73,7 +80,9 @@ export default function FilterBox({ setSearchResults }) {
                         label='Skill'
                         variant='outlined'
                         fullWidth
+                        data-cy='search'
                         onChange={(e) => setData(old => ({ ...old, name: e.target.value }))}
+                        data-testid='Skill'
                     />
                 </Grid>
                 <Grid item xs={12}>
@@ -87,6 +96,8 @@ export default function FilterBox({ setSearchResults }) {
                         valueLabelDisplay="auto"
                         getAriaValueText={valuetext}
                         marks={marks}
+                        data-cy='slider'
+                        data-testid='slider'
                     />
                 </Grid>
                 <Grid item xs={12}> 
@@ -108,6 +119,8 @@ export default function FilterBox({ setSearchResults }) {
                                 label="Tags"
                             />
                         )}
+                        data-cy="tags"
+                        data-testid="tags"
                     />
                 </Grid>
                 {/* First element */}
@@ -123,6 +136,8 @@ export default function FilterBox({ setSearchResults }) {
                         disableElevation
                         type='submit'
                         onClick={submitFilter}
+                        data-cy="filter"
+                        data-testid="filter"
                     >Filter</Button>
                 </Grid>
             </Grid>

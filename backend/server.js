@@ -186,70 +186,60 @@ webapp.get("/users/:email", async (req, res) => {
 
 webapp.post("/search/", async (req, res) => {
   try {
+    // get search parameters
     const query = req.body.query;
     const lowPrice = req.body.lowPrice;
     const highPrice = req.body.highPrice;
     const tags = req.body.tags;
-    console.log(`searching with query: ${query} and price ${lowPrice}-${highPrice} with tags ${tags}`);
+    console.log(`search params: ${query};${lowPrice}-${highPrice};${tags}`);
+    // function to check if skill contains query string
     const queryFilter = (skill) => {
+      // no query: contains it vacuously
       if (query === undefined) return true;
+      // check if query is in skill string or relevant fields
       const skillStringMatch = (skill, query) => skill.toLowerCase().indexOf(query.toLowerCase()) !== -1;
       const skillObjectMatch = (skill, query) => {
         const skillStr = `${skill.name}, ${skill.description}, ${skill.tags}`;
         return skillStringMatch(skillStr, query);
       };
+      // check the skill
       if (typeof skill === 'string') return skillStringMatch(skill, query);
       return skillObjectMatch(skill, query);
     };
+    // function to check if the skill price is in the range [lowPrice, highPrice]
     const priceFilter = (skill) => {
+      // no price parameters: not out of range
       if (lowPrice === undefined && highPrice === undefined) return true;
+      // if skill is using old string system, it has no price
       if (typeof skill === 'string') return false;
-      if (lowPrice && skill.highPrice >= lowPrice) return true;
-      if (highPrice && skill.lowPrice <= highPrice) return true;
-      return false;
+      if (skill.price === undefined) return false;
+      // check if price is in range
+      if (lowPrice && skill.price < lowPrice) return false;
+      if (highPrice && skill.price > highPrice) return false;
+      return true;
     };
+    // function to check if the skill includes any of the tags
     const tagFilter = (skill) => {
+      // if no tags given, it contains them all vacuously
       if (tags === undefined) return true;
+      console.log("tags not undefined");
+      // handle old string system
       if (typeof skill === 'string') return false;
+      // get tags as lowercase strings
       const skillTags = skill.tags.map((tag) => tag.toLowerCase());
-      for(let tag of skill.tags)
+      // if any of the user tags are a match, the skill is a match
+      for(let tag of tags)
         if (skillTags.includes(tag.toLowerCase())) return true;
       return false;
     };
+    // skills should pass all filters to match
     const filter = (skill) => queryFilter(skill) && priceFilter(skill) && tagFilter(skill);
+    // query database
     const results = await dbLib.searchUsers(filter);
     res.status(200).json({ data: results });
   } catch (err) {
     res.status(500).json({ message: `encountered error: ${err}`});
   }
-});
-
-webapp.get("/skill-price-filter/:skill/:lowPrice/:highPrice", async (req, res) => {
-    try {
-        const filter = (skill) => (
-            skill.highPrice >= req.params.lowPrice && skill.lowPrice <= req.params.highPrice
-        );
-        const results = await dbLib.searchUsersBySkill(req.params.skill, filter);
-        res.status(200).json({data: results});
-    } catch (err) {
-        res.status(500).json({message: `encountered error: ${err}`});
-    }
-});
-
-webapp.get("/skill-tag-filter/:skill/:tags", async (req, res) => {
-    try {
-        const tags = req.params.tags.toLowerCase().split('-');
-        const filter = (skill) => {
-            for(let tag of skill.tags)
-                if (tags.includes(tag.toLowerCase()))
-                    return true;
-            return false;
-        }
-        const results = await dbLib.searchUsersBySkill(req.params.skill, filter);
-        res.status(200).json({data: results});
-    } catch (err) {
-        res.status(500).json({message: `encountered error: ${err}`});
-    }
 });
 
 // /**

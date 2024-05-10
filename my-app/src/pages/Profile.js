@@ -4,16 +4,16 @@ import { useParams } from "react-router";
 
 import { useAuth } from "../auth/AuthContext";
 
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 
 import DisplayArray from "../components/DisplayArray";
-import EditSkills from "../components/EditSkills";
+// import EditSkills from "../components/EditSkills";
 
 import { getProfile, updateProfile } from "../api/profile";
 
 import SkillCard from "../components/SkillCard";
 import SkillModal from "../components/SkillModal";
-import { Button } from "@mui/material";
+import { Button, Grid, Typography } from "@mui/material";
 
 function Profile() {
   const { email } = useAuth();
@@ -28,6 +28,7 @@ function Profile() {
       try {
         const { success, data } = await getProfile(id);
         if (success) {
+          console.log(data);
           setUserData(data);
           setIsOwner(email === data.email);
         }
@@ -53,11 +54,10 @@ function Profile() {
 
   function addSkill(skill) {
     const updated = [...userData.skills, skill];
-    console.log('updating')
+    console.log("updating");
     updateSkills(updated);
-  };
-    // api call
-   
+  }
+  // api call
 
   function deleteSkill(id) {
     const updated = userData.skills.filter((_, index) => index !== id);
@@ -70,11 +70,11 @@ function Profile() {
     callUpdateAPI("skills", skills);
   }
 
-  function updateLookingFor(skills) {
-    setUserData({ ...userData, "looking for": skills });
-    // api call
-    callUpdateAPI("looking for", skills);
-  }
+  // function updateLookingFor(skills) {
+  //   setUserData({ ...userData, "looking for": skills });
+  //   // api call
+  //   callUpdateAPI("looking for", skills);
+  // }
 
   function UserInformation() {
     const [addModalOpen, setAddModalOpen] = useState(false);
@@ -84,44 +84,70 @@ function Profile() {
       <div className="px-4">
         <h1 className="py-4 mt-4 text-4xl">{userData.email}</h1>
         <Divider />
-        <div className="has-skills py-4">
-          <span className="text-2xl"> Has skills: </span>
-          <DisplayArray edit={editSkills} deleteSkill={deleteSkill} skillArray={userData.skills} testID="has-skills" />
-          {/*
-          <EditSkills
-            IsVisible={isOwner}
-            skills={userData.skills}
-            updateSkills={updateSkills}
-            testID="update-skills"
-          />
-          */}
-          <Button onClick={() => {
-            setAddModalOpen(true);
-          }} variant='outlined'>Add</Button>
-          <Button onClick={() => {
-            setEditSkills(old => !old);
-          }} variant='outlined'>{editSkills ? 'Done' : 'Delete'}</Button>
+        <Grid container spacing={2}>
+          <span className="text-2xl"></span>
+          <Grid item xs={12}>
+            <Typography variant="h4" sx={{ marginBottom: -1 }}>
+              {" "}
+              Has skills:{" "}
+            </Typography>
+          </Grid>
+          {isOwner &&
+          <Grid item xs={12} mt>
+            <Button
+              onClick={() => {
+                setAddModalOpen(true);
+              }}
+              variant="contained"
+              disableElevation
+              sx={{ marginRight: 2 }}
+              data-testid="add-skill"
+            >
+              Add
+            </Button>
+            <Button
+              onClick={() => {
+                setEditSkills((old) => !old);
+              }}
+              variant="outlined"
+            >
+              {editSkills ? "Done" : "Delete"}
+            </Button>
+          </Grid>
+  }
+          <Grid item xs={12}>
+            <DisplayArray
+              edit={editSkills}
+              deleteSkill={deleteSkill}
+              skillArray={userData.skills}
+              testID="has-skills"
+            />
+          </Grid>
+
           <SkillModal
             open={addModalOpen}
             setOpen={setAddModalOpen}
             update={addSkill}
-/>
-          <div className="text-red-500">{errorMessage}</div>
-        </div>
-        <Divider />
-        <div className="looking-for py-4">
-          <span className="text-2xl"> Looking for: </span>
-          <DisplayArray skillArray={userData["looking for"]} testID="looking-for" />
-          <EditSkills
-            IsVisible={isOwner}
-            skills={userData["looking for"]}
-            updateSkills={updateLookingFor}
-            testID="update-looking"
           />
-        </div>
+          <div className="text-red-500">{errorMessage}</div>
+        </Grid>
+          {/* <Divider />
+          <div className="looking-for py-4">
+            <span className="text-2xl"> Looking for: </span>
+            <DisplayArray
+              skillArray={userData["looking for"]}
+              testID="looking-for"
+            />
+            <EditSkills
+              IsVisible={isOwner}
+              skills={userData["looking for"]}
+              updateSkills={updateLookingFor}
+              testID="update-looking"
+            />
+          </div> */}
       </div>
-    )
-  };
+    );
+  }
 
   return (
     <div className="profile-container">

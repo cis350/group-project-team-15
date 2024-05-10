@@ -8,8 +8,11 @@ import Box from '@mui/material/Box';
 
 import { fetchSearchResults } from '../api/marketplace';
 import SkillModal from '../components/SkillModal';
+import SkillCard from "../components/SkillCard";
 
 import FilterBox from '../components/FilterBox';
+
+import Masonry from '@mui/lab/Masonry';
 
 const Marketplace = () => {
     const [searchResults, setSearchResults] = useState([]);
@@ -28,23 +31,23 @@ const Marketplace = () => {
                     <FilterBox setSearchResults={setSearchResults}/>
                 </div>
                 <div className="w-[70%] px-4 rounded-lg">
-                    <div className="grid grid-cols-2 gap-4 w-full" data-cy="search-results" data-testid="search-results">
+                {/* className="grid grid-cols-2 gap-4 w-full" */}
+                    <Masonry columns={{xs: 1, sm: 2}} spacing={2} data-cy="search-results" data-testid="search-results">
                         {searchResults.map((result, id) => (
-                            <div key={`m ${id}`}>
+                            <div key={`m ${id}`} data-cy={result.user}>
                                 <Card>
                                     <CardContent>
                                         <Typography variant="h5" component="div">
-                                            {result.user}
+                                            <a href={"../profile/" + result.user}>{result.user}</a>
                                         </Typography>
                                         <Typography variant="body2">
-                                            {result.skill.name}
+                                            <SkillCard skillObject={result.skill} />
                                         </Typography>
-                                        
                                     </CardContent>
                                 </Card>
                             </div>
                         ))}
-                    </div>
+                    </Masonry>
                 </div>
             </div>
         </div >
